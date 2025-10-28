@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PRABHU STUDIO — Perfect Shots. Stunning Edits.</title>
   <meta name="description" content="PRABHU STUDIO — Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings, events, and more." />
-  <meta name="keywords" content="Prabhu Studio, Photography, Videography, Kurnool, Wedding Photographer, Andhra Pradesh, Photo Editing, Studio, Printing, 4K Video, Album Design" />
-  <link rel="icon" href="images/logo.png" type="image/png">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -22,7 +20,7 @@
       --ff:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;scroll-behavior:smooth;}
+    html,body{height:100%}
     body{
       margin:0;
       font-family:var(--ff);
@@ -86,6 +84,31 @@
       .hero-left h2{font-size:28px}
     }
     .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
+
+    /* ✅ ADDITION STARTS HERE - Highlight for logo & photo */
+    header .logo img {
+      border: 3px solid #ff6600;
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    header .logo img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
+    }
+
+    .about-photo img {
+      border: 5px solid #ff6600;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .about-photo img:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
+    }
+    /* ✅ ADDITION ENDS HERE */
   </style>
 </head>
 
@@ -177,7 +200,7 @@
         </div>
         <div style="display:grid;gap:12px">
           <div class="about-card" style="padding:12px;display:flex;gap:12px;align-items:center">
-            <div style="width:64px;height:64px;border-radius:10px;overflow:hidden;">
+            <div class="about-photo" style="width:64px;height:64px;overflow:hidden;">
               <img src="images/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
             </div>
             <div>
@@ -236,48 +259,19 @@
     </footer>
   </div>
 
-  <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox"><img src="" alt="Expanded photo" id="lightboxImg"></div>
 
   <script>
     const toggle=document.querySelector('.menu-toggle');
     const nav=document.querySelector('.nav');
-    toggle?.addEventListener('click',()=>{
-      const open=nav.style.display==='flex';
-      nav.style.display=open?'none':'flex';
-      toggle.setAttribute('aria-expanded',String(!open));
-    });
-
+    toggle?.addEventListener('click',()=>{const open=nav.style.display==='flex';nav.style.display=open?'none':'flex';toggle.setAttribute('aria-expanded',String(!open))});
     const photos=document.querySelectorAll('.photo');
     const lightbox=document.getElementById('lightbox');
     const lbImg=document.getElementById('lightboxImg');
-    photos.forEach(p=>{
-      p.addEventListener('click',()=>{
-        const src=p.dataset.src||p.querySelector('img').src;
-        lbImg.src=src;
-        lightbox.classList.add('open');
-      });
-    });
-    lightbox.addEventListener('click',(e)=>{
-      if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open');
-    });
-
-    function handleForm(e){
-      e.preventDefault();
-      const f=e.target;
-      const data=new FormData(f);
-      const name=data.get('name')||'Client';
-      const email=data.get('email')||'';
-      const service=data.get('service')||'Inquiry';
-      const message=data.get('message')||'';
-      const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);
-      window.location.href=`mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent('New booking request from '+name)}&body=${body}`;
-      return false;
-    }
-
-    document.addEventListener('keydown',(e)=>{
-      if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open');
-    });
+    photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.dataset.src||p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
+    lightbox.addEventListener('click',(e)=>{if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open')});
+    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email=data.get('email')||'';const service=data.get('service')||'Inquiry';const message=data.get('message')||'';const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);window.location.href=`mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent('New booking request from '+name)}&body=${body}`;return false;}
+    document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open')});
   </script>
 </body>
 </html>
