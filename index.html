@@ -85,7 +85,7 @@
     }
     .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
 
-    /* ✅ ADDITION STARTS HERE - Highlight for logo & photo */
+    /* ✅ Logo & Founder Photo Styling */
     header .logo img {
       border: 3px solid #ff6600;
       box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
@@ -108,7 +108,6 @@
       transform: scale(1.07);
       box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
     }
-    /* ✅ ADDITION ENDS HERE */
   </style>
 </head>
 
@@ -129,7 +128,7 @@
         <button class="menu-toggle" aria-expanded="false">Menu</button>
         <div class="nav" role="navigation">
           <a href="#services">Services</a>
-          <a href="#portfolio">Portfolio</a>
+          <a href="#gallery">Gallery</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </div>
@@ -145,7 +144,7 @@
         <p class="lead">We create stunning photos and films for weddings, events, and brands — blending creativity, technology, and emotion.</p>
         <div class="actions">
           <a class="cta" href="#contact">Get A Quote</a>
-          <a class="btn-outline" href="#portfolio">View Portfolio</a>
+          <a class="btn-outline" href="#gallery">View Gallery</a>
         </div>
         <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
           <div class="chip">Photography</div>
@@ -162,7 +161,7 @@
               <div style="font-weight:800">Featured — Wedding Film</div>
               <div style="font-size:13px">Shot in Kurnool, 2025</div>
             </div>
-            <a class="btn-outline" href="#portfolio">See Gallery</a>
+            <a class="btn-outline" href="#gallery">See Gallery</a>
           </div>
         </div>
       </div>
@@ -182,6 +181,20 @@
         <div class="service"><h4>4K Video Editing</h4><p class="muted">Professional-grade 4K video production and editing services.</p></div>
         <div class="service"><h4>Photo Frame Designs & Frame Work</h4><p class="muted">Beautifully designed frames to preserve your memories.</p></div>
         <div class="service"><h4>Spot Printing</h4><p class="muted">Fast and reliable photo printing right at our studio.</p></div>
+      </div>
+    </section>
+
+    <!-- ✅ GALLERY -->
+    <section id="gallery">
+      <h3>Gallery</h3>
+      <p class="muted">A glimpse of our favorite shots — weddings, events, and outdoor sessions.</p>
+      <div class="portfolio" style="margin-top:16px">
+        <div class="photo"><img src="images/gallery1.jpg" alt="Wedding Moment"></div>
+        <div class="photo"><img src="images/gallery2.jpg" alt="Couple Portrait"></div>
+        <div class="photo"><img src="images/gallery3.jpg" alt="Outdoor Shoot"></div>
+        <div class="photo"><img src="images/gallery4.jpg" alt="Event Capture"></div>
+        <div class="photo"><img src="images/gallery5.jpg" alt="Studio Session"></div>
+        <div class="photo"><img src="images/gallery6.jpg" alt="Candid Moment"></div>
       </div>
     </section>
 
@@ -268,11 +281,6 @@
     const photos=document.querySelectorAll('.photo');
     const lightbox=document.getElementById('lightbox');
     const lbImg=document.getElementById('lightboxImg');
-    photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.dataset.src||p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
+    photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
     lightbox.addEventListener('click',(e)=>{if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open')});
-    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email=data.get('email')||'';const service=data.get('service')||'Inquiry';const message=data.get('message')||'';const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);window.location.href=`mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent('New booking request from '+name)}&body=${body}`;return false;}
-    document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open')});
-  </script>
-</body>
-</html>
-
+    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email
