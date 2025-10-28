@@ -27,14 +27,13 @@
       background:linear-gradient(180deg,#071021 0%,#0f1724 100%);
       color:#e6eef8;
       -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
       line-height:1.5;
       padding-bottom:60px;
     }
     .wrap{max-width:1200px;margin:0 auto;padding:28px}
     header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
     .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:56px;height:56px;background:linear-gradient(135deg,var(--accent),#60a5fa);border-radius:12px;display:grid;place-items:center;font-weight:800;color:#041024}
+    .logo img{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 0 8px rgba(59,130,246,0.5);}
     .brand h1{font-size:18px;margin:0}
     .nav{display:flex;gap:18px;align-items:center}
     .nav a{color:var(--muted);text-decoration:none;font-weight:600}
@@ -81,11 +80,9 @@
       .services{grid-template-columns:1fr}
       .hero-image{height:220px}
       .wrap{padding:18px}
-      .logo{width:44px;height:44px}
       .brand h1{font-size:16px}
       .hero-left h2{font-size:28px}
     }
-    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
   </style>
 </head>
@@ -94,7 +91,10 @@
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo">PS</div>
+        <!-- ✅ REPLACED TEXT LOGO WITH IMAGE -->
+        <div class="logo">
+          <img src="images/logo.png" alt="Prabhu Studio Logo">
+        </div>
         <div>
           <h1>PRABHU STUDIO</h1>
           <div class="muted" style="font-size:12px">Perfect Shots • Stunning Edits</div>
@@ -176,7 +176,10 @@
         </div>
         <div style="display:grid;gap:12px">
           <div class="about-card" style="padding:12px;display:flex;gap:12px;align-items:center">
-            <div style="width:64px;height:64px;border-radius:10px;background-image:url('images/about-1.jpg');background-size:cover;background-position:center"></div>
+            <!-- ✅ REPLACED PLACEHOLDER PHOTO WITH YOUR OWN -->
+            <div style="width:64px;height:64px;border-radius:10px;overflow:hidden;">
+              <img src="images/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
+            </div>
             <div>
               <div style="font-weight:800">K RAJ</div>
               <div class="muted" style="font-size:13px">Founder • Lead Photographer</div>
