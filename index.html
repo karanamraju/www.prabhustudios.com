@@ -4,7 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PRABHU STUDIO — Perfect Shots. Stunning Edits.</title>
-  <meta name="description" content="PRABHU STUDIO — Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings, events, and more." />
+  <meta name="description" content="PRABHU STUDIO — live events with LED streaming, Drone shoots, YoTube cover songs, Cine Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings, events, and more." />
+
+  <!-- ✅ Favicon -->
+  <link rel="icon" href="images/PS LOGO.png" type="image/png" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -91,19 +94,16 @@
       box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     header .logo img:hover {
       transform: scale(1.08);
       box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
     }
-
     .about-photo img {
       border: 5px solid #ff6600;
       border-radius: 50%;
       box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-
     .about-photo img:hover {
       transform: scale(1.07);
       box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
@@ -113,10 +113,11 @@
 
 <body>
   <div class="wrap">
+    <!-- HEADER -->
     <header>
       <div class="brand">
         <div class="logo">
-          <img src="/logo.png" alt="Prabhu Studio Logo">
+          <img src="images/logo.png" alt="Prabhu Studio Logo">
         </div>
         <div>
           <h1>PRABHU STUDIO</h1>
@@ -184,7 +185,7 @@
       </div>
     </section>
 
-    <!-- ✅ GALLERY -->
+    <!-- GALLERY -->
     <section id="gallery">
       <h3>Gallery</h3>
       <p class="muted">A glimpse of our favorite shots — weddings, events, and outdoor sessions.</p>
@@ -214,7 +215,7 @@
         <div style="display:grid;gap:12px">
           <div class="about-card" style="padding:12px;display:flex;gap:12px;align-items:center">
             <div class="about-photo" style="width:64px;height:64px;overflow:hidden;">
-              <img src="/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
+              <img src="images/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
             </div>
             <div>
               <div style="font-weight:800">K RAJ</div>
@@ -272,6 +273,7 @@
     </footer>
   </div>
 
+  <!-- LIGHTBOX SCRIPT -->
   <div class="lightbox" id="lightbox"><img src="" alt="Expanded photo" id="lightboxImg"></div>
 
   <script>
@@ -282,5 +284,4 @@
     const lightbox=document.getElementById('lightbox');
     const lbImg=document.getElementById('lightboxImg');
     photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
-    lightbox.addEventListener('click',(e)=>{if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open')});
-    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email
+    lightbox.addEventListener('click',(e)=>{if(e.target===
