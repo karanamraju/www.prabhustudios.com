@@ -6,143 +6,198 @@
   <title>PRABHU STUDIO — Perfect Shots. Stunning Edits.</title>
   <meta name="description" content="PRABHU STUDIO — Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings, events, and more." />
 
-  <!-- ✅ Canonical URL -->
-  <link rel="canonical" href="https://www.prabhustudios.com/">
+  <!-- ✅ Favicon & Open Graph for Google -->
+  <link rel="icon" href="/logo.png" type="image/png" />
+  <meta property="og:title" content="PRABHU STUDIO — Perfect Shots. Stunning Edits." />
+  <meta property="og:description" content="Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh." />
+  <meta property="og:image" content="https://www.prabhustudios.com/logo.png" />
+  <meta property="og:url" content="https://www.prabhustudios.com" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- ✅ Favicon / Logo icon -->
-  <link rel="icon" href="https://www.prabhustudios.com/images/logo.png" type="image/png">
-
-  <!-- ✅ Open Graph Meta Tags -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="PRABHU STUDIO — Perfect Shots. Stunning Edits.">
-  <meta property="og:description" content="Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings and events.">
-  <meta property="og:image" content="https://www.prabhustudios.com/images/logo.png">
-  <meta property="og:url" content="https://www.prabhustudios.com/">
-
-  <!-- ✅ Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="PRABHU STUDIO — Perfect Shots. Stunning Edits.">
-  <meta name="twitter:description" content="Photography, Videography, Editing & Printing in Kurnool.">
-  <meta name="twitter:image" content="https://www.prabhustudios.com/images/logo.png">
-
-  <!-- ✅ Logo Schema for Google -->
+  <!-- ✅ Google Logo Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "PRABHU STUDIO",
-    "url": "https://www.prabhustudios.com/",
-    "logo": "https://www.prabhustudios.com/images/logo.png",
-    "founder": {
-      "@type": "Person",
-      "name": "K RAJ"
-    },
+    "url": "https://www.prabhustudios.com",
+    "logo": "https://www.prabhustudios.com/logo.png",
     "sameAs": [
-      "https://www.instagram.com/prabhustudios",
       "https://www.youtube.com/@rk_in",
-      "https://www.facebook.com/prabhustudios"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Kurnool",
-      "addressRegion": "Andhra Pradesh",
-      "addressCountry": "IN"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+91-9985854140",
-      "contactType": "customer service"
-    }
+      "https://www.instagram.com/",
+      "https://www.facebook.com/"
+    ]
   }
   </script>
 
-  <!-- Google Font -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      background: #111;
-      color: #fff;
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#a8b3c6;
+      --accent:#3b82f6;
+      --glass:rgba(255,255,255,0.04);
+      --radius:14px;
+      --ff:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
     }
-    header {
-      background: #000;
-      text-align: center;
-      padding: 20px;
-      border-bottom: 2px solid #ff6600;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff);
+      background:linear-gradient(180deg,#071021 0%,#0f1724 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      line-height:1.5;
+      padding-bottom:60px;
     }
-    header .logo img {
-      width: 160px;
-      border: 3px solid #ff6600;
-      border-radius: 50%;
-      box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .wrap{max-width:1200px;margin:0 auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo img{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 0 8px rgba(59,130,246,0.5);}
+    .brand h1{font-size:18px;margin:0}
+    .nav{display:flex;gap:18px;align-items:center}
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .cta{background:linear-gradient(90deg,#60a5fa,#3b82f6);padding:10px 14px;border-radius:12px;color:#041024;font-weight:700;text-decoration:none}
+    .menu-toggle{display:none;background:transparent;border:0;color:var(--muted);font-weight:700}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:36px 0}
+    .hero-left h2{font-size:38px;margin:0 0 14px}
+    .kicker{display:inline-block;padding:6px 10px;background:var(--glass);border-radius:999px;color:var(--accent);font-weight:700;margin-bottom:12px}
+    .hero p.lead{color:var(--muted);font-size:16px;margin:0 0 18px}
+    .hero .actions{display:flex;gap:12px}
+    .btn-outline{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);color:var(--muted);text-decoration:none;font-weight:700}
+    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:18px;padding:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6);}
+    .hero-image{width:100%;height:360px;border-radius:12px;background-image:url('images/studio-hero.jpg');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03)}
+    section{padding:44px 0}
+    h3{margin:0 0 16px}
+    .muted{color:var(--muted)}
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .service{background:var(--card);padding:18px;border-radius:12px}
+    .service h4{margin:0 0 8px}
+    .portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .photo{position:relative;overflow:hidden;border-radius:10px;cursor:pointer}
+    .photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+    .photo:hover img{transform:scale(1.06)}
+    .about{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:center}
+    .about-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px}
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    form{display:grid;gap:12px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:inherit}
+    .submit{background:var(--accent);padding:12px;border-radius:10px;border:0;font-weight:800}
+    footer{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.03)}
+    .lightbox{position:fixed;inset:0;display:none;place-items:center;background:rgba(2,6,23,0.8);z-index:60}
+    .lightbox.open{display:grid}
+    .lightbox img{max-width:92%;max-height:86%;border-radius:10px}
+    @media(max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .about{grid-template-columns:1fr}
+      .portfolio{grid-template-columns:repeat(2,1fr)}
+      .services{grid-template-columns:repeat(2,1fr)}
+      .menu-toggle{display:block}
+      .nav{display:none}
     }
-    header .logo img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
-    }
-    header h1 {
-      margin: 10px 0 0;
-      font-weight: 800;
-      font-size: 1.8rem;
-      letter-spacing: 1px;
-    }
-    section {
-      padding: 40px 20px;
-      text-align: center;
-    }
-    section h2 {
-      color: #ff6600;
-      margin-bottom: 20px;
-      font-size: 1.6rem;
-    }
-    footer {
-      background: #000;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      border-top: 2px solid #ff6600;
-    }
-    footer a {
-      color: #ff6600;
-      text-decoration: none;
-      margin: 0 5px;
+    @media(max-width:640px){
+      .portfolio{grid-template-columns:1fr}
+      .services{grid-template-columns:1fr}
+      .hero-image{height:220px}
+      .wrap{padding:18px}
+      .brand h1{font-size:16px}
+      .hero-left h2{font-size:28px}
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <img src="images/logo.png" alt="Prabhu Studio Logo">
-    </div>
-    <h1>PRABHU STUDIO</h1>
-    <p>Perfect Shots. Stunning Edits.</p>
-  </header>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <img src="/logo.png" alt="Prabhu Studio Logo">
+        </div>
+        <div>
+          <h1>PRABHU STUDIO</h1>
+          <div class="muted" style="font-size:12px">Perfect Shots • Stunning Edits</div>
+        </div>
+      </div>
 
-  <section>
-    <h2>Our Services</h2>
-    <p>Cover songs, Photography, Videography, Editing & Printing — we capture every precious moment with perfection. Specialized in wedding, event, and portrait photography in Kurnool, Andhra Pradesh.</p>
-  </section>
+      <nav>
+        <button class="menu-toggle" aria-expanded="false">Menu</button>
+        <div class="nav" role="navigation">
+          <a href="#services">Services</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <a class="cta" href="#contact">Book a Shoot</a>
+      </nav>
+    </header>
 
-  <section>
-    <h2>Contact Us</h2>
-    <p><strong>Founder:</strong> K RAJ<br>
-       <strong>Phone:</strong> <a href="tel:+919985854140">+91-9985854140</a><br>
-       <strong>Location:</strong> Kurnool, Andhra Pradesh<br>
-       <strong>Email:</strong> <a href="mailto:prabhustudios@gmail.com">prabhustudios@gmail.com</a></p>
-  </section>
+    <section class="hero" id="home">
+      <div class="hero-left">
+        <span class="kicker">Now in Kurnool — Andhra Pradesh</span>
+        <h2>Capture your story with cinematic style</h2>
+        <p class="lead">We create stunning photos and films for weddings, events, and brands — blending creativity, technology, and emotion.</p>
+        <div class="actions">
+          <a class="cta" href="#contact">Get A Quote</a>
+          <a class="btn-outline" href="#portfolio">View Portfolio</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="hero-image" role="img" aria-label="Studio hero image"></div>
+        </div>
+      </div>
+    </section>
 
-  <footer>
-    <p>© 2025 PRABHU STUDIO | All Rights Reserved</p>
-    <p>
-      <a href="https://www.instagram.com/prabhustudios">Instagram</a> |
-      <a href="https://www.youtube.com/@rk_in">YouTube</a> |
-      <a href="https://www.facebook.com/prabhustudios">Facebook</a>
-    </p>
-  </footer>
+    <section id="services">
+      <h3>Our Services</h3>
+      <div class="services">
+        <div class="service"><h4>Wedding Photography</h4></div>
+        <div class="service"><h4>Videography</h4></div>
+        <div class="service"><h4>Editing & Printing</h4></div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h3>About PRABHU STUDIO</h3>
+      <p class="muted">Founded by <strong>K RAJ</strong> — Kurnool, Andhra Pradesh.</p>
+    </section>
+
+    <section id="contact">
+      <h3>Contact</h3>
+      <p class="muted">We’d love to hear from you.</p>
+      <div class="contact-grid">
+        <form id="contactForm" onsubmit="return handleForm(event)">
+          <input name="name" placeholder="Your name" required />
+          <input name="email" type="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Message"></textarea>
+          <button class="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <div class="muted">© 2025 PRABHU STUDIO</div>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox"><img src="" alt="Expanded photo" id="lightboxImg"></div>
+
+  <script>
+    function handleForm(e){
+      e.preventDefault();
+      const f=e.target;
+      const data=new FormData(f);
+      const name=data.get('name');
+      const email=data.get('email');
+      const message=data.get('message');
+      const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href=`mailto:karanamrajusmart@gmail.com?subject=Contact from ${name}&body=${body}`;
+      return false;
+    }
+  </script>
 </body>
 </html>
