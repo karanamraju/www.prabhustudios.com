@@ -64,9 +64,6 @@
     input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:inherit}
     .submit{background:var(--accent);padding:12px;border-radius:10px;border:0;font-weight:800}
     footer{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.03)}
-    .lightbox{position:fixed;inset:0;display:none;place-items:center;background:rgba(2,6,23,0.8);z-index:60}
-    .lightbox.open{display:grid}
-    .lightbox img{max-width:92%;max-height:86%;border-radius:10px}
     @media(max-width:980px){
       .hero{grid-template-columns:1fr}
       .about{grid-template-columns:1fr}
@@ -83,30 +80,7 @@
       .brand h1{font-size:16px}
       .hero-left h2{font-size:28px}
     }
-    .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
-
-    /* ✅ Added Highlight styles */
-    header .logo img {
-      border: 3px solid #ff6600;
-      box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    header .logo img:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
-    }
-    .about-photo img {
-      border: 5px solid #ff6600;
-      border-radius: 50%;
-      box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-    .about-photo img:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
-    }
-
-    /* ✅ AI Studio section styles */
+    /* AI Studio Section */
     .ai-section {
       background: linear-gradient(90deg, #1e293b, #0f172a);
       border-radius: 16px;
@@ -115,19 +89,6 @@
       text-align: center;
       box-shadow: 0 0 25px rgba(59,130,246,0.3);
     }
-    .ai-section h3 {
-      font-size: 28px;
-      background: linear-gradient(90deg, #60a5fa, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 14px;
-    }
-    .ai-section p {
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 800px;
-      margin: 0 auto 25px;
-    }
     .ai-section iframe {
       width: 90%;
       height: 420px;
@@ -135,36 +96,11 @@
       border-radius: 12px;
       box-shadow: 0 0 25px rgba(59,130,246,0.3);
     }
-    @media(max-width:640px){
-      .ai-section iframe { height: 240px; }
-    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">
-          <img src="/logo.png" alt="Prabhu Studio Logo">
-        </div>
-        <div>
-          <h1>PRABHU STUDIO</h1>
-          <div class="muted" style="font-size:12px">Perfect Shots • Stunning Edits</div>
-        </div>
-      </div>
-
-      <nav>
-        <button class="menu-toggle" aria-expanded="false">Menu</button>
-        <div class="nav" role="navigation">
-          <a href="#services">Services</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <a class="cta" href="#contact">Book a Shoot</a>
-      </nav>
-    </header>
 
     <!-- HERO -->
     <section class="hero" id="home">
@@ -176,100 +112,25 @@
           <a class="cta" href="#contact">Get A Quote</a>
           <a class="btn-outline" href="#portfolio">View Portfolio</a>
         </div>
-        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
-          <div class="chip">Photography</div>
-          <div class="chip">Videography</div>
-          <div class="chip">Editing</div>
-        </div>
       </div>
-
       <div class="hero-right">
         <div class="hero-card">
           <div class="hero-image" role="img" aria-label="Studio hero image"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted)">
-            <div>
-              <div style="font-weight:800">Featured — Wedding Film</div>
-              <div style="font-size:13px">Shot in Kurnool, 2025</div>
-            </div>
-            <a class="btn-outline" href="#portfolio">See Gallery</a>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- STUDIO VIDEO -->
-    <section>
-      <h3>Studio Showreel</h3>
-      <p class="muted">Watch our cinematic description.</p>
-      <div style="text-align:center; margin-top:20px;">
-        <iframe 
-          width="90%" 
-          height="450" 
-          src="https://www.youtube.com/embed/8YHS7Z_2f4E?si=BHEDgizPr69A0YSs"
-          title="PRABHU STUDIO Showreel"
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen>
-        </iframe>
-      </div>
-    </section>
-
-    <!-- ✅ AI STUDIO SECTION ADDED HERE -->
+    <!-- AI STUDIO -->
     <section class="ai-section" id="ai-studio">
-  <h3>AI Studio — The Future of Creativity</h3>
-  <p>Experience the power of Artificial Intelligence in video editing, scene creation, and virtual production. PRABHU STUDIO combines technology and art to transform imagination into cinematic visuals.</p>
-  <iframe 
-    src="https://www.youtube.com/embed/gPnSZtivYYo"
-    title="AI Studio Behind The Scenes"
-    frameborder="0" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</section>
-
-
-    <!-- SERVICES -->
-    <section id="services">
-      <h3>Our Services</h3>
-      <p class="muted">Professional photography, videography, and design services — all under one roof.</p>
-      <div class="services" style="margin-top:16px">
-        <div class="service"><h4>Wedding Photography</h4><p class="muted">Capturing timeless moments from every ceremony and celebration.</p></div>
-        <div class="service"><h4>Videography</h4><p class="muted">Cinematic storytelling with high-end visuals and editing.</p></div>
-        <div class="service"><h4>Photo Editing</h4><p class="muted">Enhance every shot with color correction and artistic retouching.</p></div>
-        <div class="service"><h4>Passport Photos</h4><p class="muted">Instant, high-quality passport and ID photographs.</p></div>
-        <div class="service"><h4>Outdoor Shoots</h4><p class="muted">Creative portraits and pre/post-wedding shoots in natural light.</p></div>
-        <div class="service"><h4>Album Design</h4><p class="muted">Custom album layouts designed with elegance and precision.</p></div>
-        <div class="service"><h4>4K Video Editing</h4><p class="muted">Professional-grade 4K video production and editing services.</p></div>
-        <div class="service"><h4>Photo Frame Designs & Frame Work</h4><p class="muted">Beautifully designed frames to preserve your memories.</p></div>
-        <div class="service"><h4>Spot Printing</h4><p class="muted">Fast and reliable photo printing right at our studio.</p></div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-      <h3>About PRABHU STUDIO</h3>
-      <p class="muted">Founded by <strong>RAJ K</strong>, PRABHU STUDIO in Kurnool, Andhra Pradesh has been creating memorable photography and videography experiences for clients since 1990.</p>
-      <div class="about" style="margin-top:18px">
-        <div class="about-card">
-          <p class="muted">Our team blends creativity and professionalism to capture authentic stories with cinematic flair — whether it’s a wedding, event, or portrait session.</p>
-          <ul class="muted" style="margin-top:12px">
-            <li>Two photographers for weddings & events</li>
-            <li>Drone and 4K video services available</li>
-            <li>Custom albums and frame designs</li>
-          </ul>
-        </div>
-        <div style="display:grid;gap:12px">
-          <div class="about-card" style="padding:12px;display:flex;gap:12px;align-items:center">
-            <div class="about-photo" style="width:64px;height:64px;overflow:hidden;">
-              <img src="/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
-            </div>
-            <div>
-              <div style="font-weight:800">K RAJ</div>
-              <div class="muted" style="font-size:13px">Founder • Lead cinematographer, editor</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h3>AI Studio — The Future of Creativity</h3>
+      <p>Experience the power of Artificial Intelligence in video editing, scene creation, and virtual production. PRABHU STUDIO combines technology and art to transform imagination into cinematic visuals.</p>
+      <iframe 
+        src="https://www.youtube.com/embed/gPnSZtivYYo"
+        title="AI Studio Behind The Scenes"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
     </section>
 
     <!-- CONTACT -->
@@ -289,12 +150,43 @@
             <option value="other">Other / Inquiry</option>
           </select>
           <textarea name="message" placeholder="Tell us more (location, timings, must-haves)" rows="4"></textarea>
-          <button class="submit">Request Quote</button>
+          <button class="submit" type="submit">Request Quote</button>
         </form>
 
         <aside style="background:var(--card);padding:16px;border-radius:12px">
-          <div style="font-weight:800">Visit / Call</div>
-          <div class="muted" style="margin-top:8px">Kurnool, Andhra Pradesh</div>
-          <div
+          <div style="font-weight:800;font-size:18px;">Visit / Call</div>
+          <p class="muted" style="margin-top:8px;">📍 Kurnool, Andhra Pradesh</p>
+          <p><strong>📞 Phone:</strong> <a href="tel:+919985854140" style="color:#60a5fa;">+91 99858 54140</a></p>
+          <p><strong>📧 Email:</strong> <a href="mailto:karanamrajusmart@gmail.com" style="color:#60a5fa;">karanamrajusmart@gmail.com</a></p>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0;">
+          <p class="muted">Available 7 days a week for bookings and support.</p>
+        </aside>
+      </div>
+    </section>
 
+    <footer>
+      <p class="muted" style="text-align:center;">© 2025 PRABHU STUDIO — All Rights Reserved.</p>
+    </footer>
+  </div>
 
+  <script>
+    function handleForm(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = new FormData(form);
+      const subject = `New Inquiry from ${data.get("name")}`;
+      const body = `
+Name: ${data.get("name")}
+Email: ${data.get("email")}
+Phone: ${data.get("phone")}
+Date: ${data.get("date")}
+Service: ${data.get("service")}
+Message: ${data.get("message")}
+      `;
+      window.location.href = `mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      alert("✅ Your message is ready to send via your email app!");
+      form.reset();
+    }
+  </script>
+</body>
+</html>
