@@ -85,30 +85,59 @@
     }
     .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
 
-    /* ✅ ADDITION STARTS HERE - Highlight for logo & photo */
+    /* ✅ Added Highlight styles */
     header .logo img {
       border: 3px solid #ff6600;
       box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
     header .logo img:hover {
       transform: scale(1.08);
       box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
     }
-
     .about-photo img {
       border: 5px solid #ff6600;
       border-radius: 50%;
       box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-
     .about-photo img:hover {
       transform: scale(1.07);
       box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
     }
-    /* ✅ ADDITION ENDS HERE */
+
+    /* ✅ AI Studio section styles */
+    .ai-section {
+      background: linear-gradient(90deg, #1e293b, #0f172a);
+      border-radius: 16px;
+      padding: 40px 20px;
+      margin-top: 50px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(59,130,246,0.3);
+    }
+    .ai-section h3 {
+      font-size: 28px;
+      background: linear-gradient(90deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 14px;
+    }
+    .ai-section p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 800px;
+      margin: 0 auto 25px;
+    }
+    .ai-section iframe {
+      width: 90%;
+      height: 420px;
+      border: 2px solid #3b82f6;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(59,130,246,0.3);
+    }
+    @media(max-width:640px){
+      .ai-section iframe { height: 240px; }
+    }
   </style>
 </head>
 
@@ -153,40 +182,7 @@
           <div class="chip">Editing</div>
         </div>
       </div>
-  <section>
-    <h2>Studio Showreel</h2>
-    <p>Watch our descrption.</p>
-    <div style="text-align:center; margin-top:20px;">
-      <!-- Replace the link below with your YouTube or MP4 video -->
-      <iframe 
-  width="90%" 
-  height="450" 
-  src="https://www.youtube.com/embed/8YHS7Z_2f4E?si=BHEDgizPr69A0YSs"
-  title="PRABHU STUDIO Showreel"
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
 
-    </div>
-  </section>
-      <section>
-    <h2>Studio Showreel</h2>
-    <p>Watch our descrption.</p>
-    <div style="text-align:center; margin-top:20px;">
-      <!-- Replace the link below with your YouTube or MP4 video -->
-      <iframe 
-  width="90%" 
-  height="450" 
-  src="https://youtu.be/gPnSZtivYYo?si=jw31hAlCigmCsX-j"
-  title="PRABHU STUDIO Showreel"
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
-
-    </div>
-  </section>
       <div class="hero-right">
         <div class="hero-card">
           <div class="hero-image" role="img" aria-label="Studio hero image"></div>
@@ -199,6 +195,36 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- STUDIO VIDEO -->
+    <section>
+      <h3>Studio Showreel</h3>
+      <p class="muted">Watch our cinematic description.</p>
+      <div style="text-align:center; margin-top:20px;">
+        <iframe 
+          width="90%" 
+          height="450" 
+          src="https://www.youtube.com/embed/8YHS7Z_2f4E?si=BHEDgizPr69A0YSs"
+          title="PRABHU STUDIO Showreel"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <!-- ✅ AI STUDIO SECTION ADDED HERE -->
+    <section class="ai-section" id="ai-studio">
+      <h3>AI Studio — The Future of Creativity</h3>
+      <p>Experience the power of Artificial Intelligence in video editing, scene creation, and virtual production. PRABHU STUDIO combines technology and art to transform imagination into cinematic visuals.</p>
+      <iframe 
+        src="https://www.youtube.com/embed/4ZyUjUt7WJY?si=Q9K6gqTbz8lOnxRj"
+        title="AI Studio Behind The Scenes"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
     </section>
 
     <!-- SERVICES -->
@@ -268,49 +294,4 @@
         <aside style="background:var(--card);padding:16px;border-radius:12px">
           <div style="font-weight:800">Visit / Call</div>
           <div class="muted" style="margin-top:8px">Kurnool, Andhra Pradesh</div>
-          <div style="margin-top:8px">
-            <div class="muted">Phone</div>
-            <div>+91 9985854140</div>
-          </div>
-          <div style="margin-top:10px">
-            <div class="muted">Email</div>
-            <div>karanamrajusmart@gmail.com</div>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <footer>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-        <div class="muted">© 2025 PRABHU STUDIO — All rights reserved</div>
-        <div class="muted">Follow us: 
-          <a href="#" style="color:var(--accent)">Instagram</a> • 
-          <a href="http://www.youtube.com/@rk_in" style="color:var(--accent)">YouTube</a> • 
-          <a href="#" style="color:var(--accent)">Facebook</a>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <div class="lightbox" id="lightbox"><img src="" alt="Expanded photo" id="lightboxImg"></div>
-
-  <script>
-    const toggle=document.querySelector('.menu-toggle');
-    const nav=document.querySelector('.nav');
-    toggle?.addEventListener('click',()=>{const open=nav.style.display==='flex';nav.style.display=open?'none':'flex';toggle.setAttribute('aria-expanded',String(!open))});
-    const photos=document.querySelectorAll('.photo');
-    const lightbox=document.getElementById('lightbox');
-    const lbImg=document.getElementById('lightboxImg');
-    photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.dataset.src||p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
-    lightbox.addEventListener('click',(e)=>{if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open')});
-    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email=data.get('email')||'';const service=data.get('service')||'Inquiry';const message=data.get('message')||'';const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);window.location.href=`mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent('New booking request from '+name)}&body=${body}`;return false;}
-    document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open')});
-  </script>
-</body>
-</html>
-
-
-
-
-
-
+          <div
