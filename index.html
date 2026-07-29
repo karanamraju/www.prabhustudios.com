@@ -1,332 +1,716 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PRABHU STUDIO — Perfect Shots. Stunning Edits and create a Trend.</title>
-  <meta name="description" content="PRABHU STUDIO —cover songs, 4k Drone visuals,Events live STREAMING, Cenematic Photography, Videography, Editing & Printing in Kurnool, Andhra Pradesh. Professional photo & video studio for weddings, events, and more." />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --muted:#a8b3c6;
-      --accent:#3b82f6;
-      --glass:rgba(255,255,255,0.04);
-      --radius:14px;
-      --ff:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--ff);
-      background:linear-gradient(180deg,#071021 0%,#0f1724 100%);
-      color:#e6eef8;
-      -webkit-font-smoothing:antialiased;
-      line-height:1.5;
-      padding-bottom:60px;
-    }
-    .wrap{max-width:1200px;margin:0 auto;padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo img{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 0 8px rgba(59,130,246,0.5);}
-    .brand h1{font-size:18px;margin:0}
-    .nav{display:flex;gap:18px;align-items:center}
-    .nav a{color:var(--muted);text-decoration:none;font-weight:600}
-    .cta{background:linear-gradient(90deg,#60a5fa,#3b82f6);padding:10px 14px;border-radius:12px;color:#041024;font-weight:700;text-decoration:none}
-    .menu-toggle{display:none;background:transparent;border:0;color:var(--muted);font-weight:700}
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:36px 0}
-    .hero-left h2{font-size:38px;margin:0 0 14px}
-    .kicker{display:inline-block;padding:6px 10px;background:var(--glass);border-radius:999px;color:var(--accent);font-weight:700;margin-bottom:12px}
-    .hero p.lead{color:var(--muted);font-size:16px;margin:0 0 18px}
-    .hero .actions{display:flex;gap:12px}
-    .btn-outline{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);color:var(--muted);text-decoration:none;font-weight:700}
-    .hero-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:18px;padding:14px;box-shadow:0 6px 30px rgba(2,6,23,0.6);}
-    .hero-image{width:100%;height:360px;border-radius:12px;background-image:url('images/studio-hero.jpg');background-size:cover;background-position:center;border:1px solid rgba(255,255,255,0.03)}
-    section{padding:44px 0}
-    h3{margin:0 0 16px}
-    .muted{color:var(--muted)}
-    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .service{background:var(--card);padding:18px;border-radius:12px}
-    .service h4{margin:0 0 8px}
-    .portfolio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .photo{position:relative;overflow:hidden;border-radius:10px;cursor:pointer}
-    .photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
-    .photo:hover img{transform:scale(1.06)}
-    .about{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:center}
-    .about-card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px}
-    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-    form{display:grid;gap:12px}
-    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px;border-radius:8px;color:inherit}
-    .submit{background:var(--accent);padding:12px;border-radius:10px;border:0;font-weight:800}
-    footer{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.03)}
-    .lightbox{position:fixed;inset:0;display:none;place-items:center;background:rgba(2,6,23,0.8);z-index:60}
-    .lightbox.open{display:grid}
-    .lightbox img{max-width:92%;max-height:86%;border-radius:10px}
-    @media(max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .about{grid-template-columns:1fr}
-      .portfolio{grid-template-columns:repeat(2,1fr)}
-      .services{grid-template-columns:repeat(2,1fr)}
-      .menu-toggle{display:block}
-      .nav{display:none}
-    }
-    @media(max-width:640px){
-      .portfolio{grid-template-columns:1fr}
-      .services{grid-template-columns:1fr}
-      .hero-image{height:220px}
-      .wrap{padding:18px}
-      .brand h1{font-size:16px}
-      .hero-left h2{font-size:28px}
-    }
-    .chip{display:inline-block;padding:6px 10px;background:rgba(255,255,255,0.02);border-radius:999px;font-weight:700}
+<title>PRABHU STUDIO | Wedding Photography & Cinematography</title>
 
-    /* ✅ ADDITION STARTS HERE - Highlight for logo & photo */
-    header .logo img {
-      border: 3px solid #ff6600;
-      box-shadow: 0 0 15px rgba(255, 102, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+<meta name="description"
+content="Professional Wedding Photography, Cinematic Wedding Films, Pre Wedding, Drone, AI Studio, Albums, Live Streaming">
 
-    header .logo img:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 25px rgba(255, 102, 0, 0.8);
-    }
+<meta name="keywords"
+content="Wedding Photography, Cinematography, Indian Wedding, AI Studio, Prabhu Studio">
 
-    .about-photo img {
-      border: 5px solid #ff6600;
-      border-radius: 50%;
-      box-shadow: 0 0 25px rgba(255, 102, 0, 0.5);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    .about-photo img:hover {
-      transform: scale(1.07);
-      box-shadow: 0 0 40px rgba(255, 102, 0, 0.8);
-    }
-    /* ✅ ADDITION ENDS HERE */
-  </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+overflow-x:hidden;
+}
+
+a{
+text-decoration:none;
+color:white;
+}
+
+header{
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 8%;
+
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(12px);
+
+z-index:999;
+
+}
+
+.logo{
+
+font-size:32px;
+font-weight:800;
+letter-spacing:2px;
+color:#FFD700;
+
+}
+
+nav{
+
+display:flex;
+gap:35px;
+
+}
+
+nav a{
+
+font-size:16px;
+font-weight:500;
+transition:.3s;
+
+}
+
+nav a:hover{
+
+color:#FFD700;
+
+}
+
+.book-btn{
+
+padding:12px 28px;
+background:#FFD700;
+border-radius:30px;
+color:black;
+font-weight:700;
+
+}
+
+.book-btn:hover{
+
+background:white;
+
+}
+
+.hero{
+
+height:100vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+text-align:center;
+
+padding:0 10%;
+
+background:
+
+linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)),
+
+url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1800&q=80');
+
+background-size:cover;
+background-position:center;
+
+}
+
+.hero-content{
+
+max-width:900px;
+
+}
+
+.hero h1{
+
+font-size:68px;
+font-weight:800;
+
+line-height:1.1;
+
+margin-bottom:20px;
+
+}
+
+.hero span{
+
+color:#FFD700;
+
+}
+
+.hero p{
+
+font-size:20px;
+color:#ddd;
+line-height:1.8;
+margin-bottom:40px;
+
+}
+
+.hero-buttons{
+
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+
+}
+
+.btn{
+
+padding:16px 40px;
+border-radius:40px;
+font-weight:700;
+transition:.4s;
+
+}
+
+.primary{
+
+background:#FFD700;
+color:black;
+
+}
+
+.secondary{
+
+border:2px solid white;
+
+}
+
+.btn:hover{
+
+transform:translateY(-5px);
+
+}
+
+.scroll{
+
+position:absolute;
+
+bottom:30px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:14px;
+
+letter-spacing:2px;
+
+}
+
+section{
+
+padding:100px 8%;
+
+}
+
+.title{
+
+text-align:center;
+margin-bottom:60px;
+
+}
+
+.title h2{
+
+font-size:42px;
+
+}
+
+.title p{
+
+margin-top:10px;
+color:#bbb;
+
+}
+
+</style>
+
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">
-          <img src="/logo.png" alt="Prabhu Studio Logo">
-        </div>
-        <div>
-          <h1>PRABHU STUDIO</h1>
-          <div class="muted" style="font-size:12px">Perfect Shots • Stunning Edits</div>
-        </div>
-      </div>
 
-      <nav>
-        <button class="menu-toggle" aria-expanded="false">Menu</button>
-        <div class="nav" role="navigation">
-          <a href="#services">Services</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <a class="cta" href="#contact">Book a Shoot</a>
-      </nav>
-    </header>
+<header>
 
-    <!-- HERO -->
-    <section class="hero" id="home">
-      <div class="hero-left">
-        <span class="kicker">Now in Kurnool — Andhra Pradesh</span>
-        <h2>Capture your story with cinematic style</h2>
-        <p class="lead">We create stunning photos and films for weddings, events, and brands — blending creativity, technology, and emotion.</p>
-        <div class="actions">
-          <a class="cta" href="#contact">Get A Quote</a>
-          <a class="btn-outline" href="#portfolio">View Portfolio</a>
-        </div>
-        <div style="margin-top:18px;display:flex;gap:12px;flex-wrap:wrap;">
-          <div class="chip">Photography</div>
-          <div class="chip">Videography</div>
-          <div class="chip">Editing</div>
-        </div>
-      </div>
-      <!-- AI STUDIO SECTION -->
-<section class="ai-section" id="ai-studio">
-  <h3>🎬 PRABHU AI STUDIO</h3>
-  <p class="muted">Experience next-generation cinematic video creation powered by AI.</p>
-  <div style="margin-top:20px;">
-    <iframe 
-      width="100%" 
-      height="400" 
-      src="https://www.youtube.com/embed/gPnSZtivYYo" 
-      title="AI Studio Video" 
-      frameborder="0" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-      allowfullscreen>
-    </iframe>
-  </div>
+<div class="logo">
+
+PRABHU STUDIO
+
+</div>
+
+<nav>
+
+<a href="#">Home</a>
+
+<a href="#services">Services</a>
+
+<a href="#portfolio">Portfolio</a>
+
+<a href="#ai">AI Studio</a>
+
+<a href="#pricing">Pricing</a>
+
+<a href="#contact">Contact</a>
+
+</nav>
+
+<a href="#" class="book-btn">
+
+Book Now
+
+</a>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+
+Capture Your
+
+<span>
+
+Forever
+
+</span>
+
+Moments
+
+</h1>
+
+<p>
+
+Premium Wedding Photography, Cinematic Films,
+Traditional Photography,
+Drone Coverage,
+Luxury Albums,
+AI Studio Editing,
+Live Streaming &
+Complete Wedding Solutions.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#" class="btn primary">
+
+Book Session
+
+</a>
+
+<a href="#portfolio" class="btn secondary">
+
+View Portfolio
+
+</a>
+
+</div>
+
+</div>
+
+<div class="scroll">
+
+SCROLL DOWN
+
+</div>
+  <!-- ========================= -->
+<!-- SERVICES -->
+<!-- ========================= -->
+
+<section id="services">
+
+<div class="title">
+<h2>Our Services</h2>
+<p>Everything you need for your special moments</p>
+</div>
+
+<div class="service-grid">
+
+<div class="service-card">
+<i class="fas fa-camera-retro"></i>
+<h3>Wedding Photography</h3>
+<p>Traditional and candid wedding photography with premium editing.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-video"></i>
+<h3>Cinematic Films</h3>
+<p>4K cinematic wedding films with creative storytelling.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-ring"></i>
+<h3>Pre Wedding</h3>
+<p>Creative destination pre-wedding shoots with cinematic style.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-helicopter"></i>
+<h3>Drone Coverage</h3>
+<p>Professional aerial photography and cinematic drone videos.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-book-open"></i>
+<h3>Luxury Albums</h3>
+<p>Premium crystal, acrylic and designer wedding albums.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-robot"></i>
+<h3>AI Studio</h3>
+<p>AI portrait enhancement, premium posters and cinematic edits.</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- PORTFOLIO -->
+<!-- ========================= -->
+
+<section id="portfolio">
+
+<div class="title">
+<h2>Portfolio</h2>
+<p>Our latest wedding memories</p>
+</div>
+
+<div class="gallery">
+
+<img src="images/gallery1.jpg" alt="">
+<img src="images/gallery2.jpg" alt="">
+<img src="images/gallery3.jpg" alt="">
+<img src="images/gallery4.jpg" alt="">
+<img src="images/gallery5.jpg" alt="">
+<img src="images/gallery6.jpg" alt="">
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- AI STUDIO -->
+<!-- ========================= -->
+
+<section id="ai">
+
+<div class="title">
+<h2>AI Studio</h2>
+<p>Next Generation Wedding Editing</p>
+</div>
+
+<div class="ai-box">
+
+<h3>Create Extraordinary Memories</h3>
+
+<p>
+
+AI Face Enhancement<br>
+Background Replacement<br>
+Luxury Wedding Posters<br>
+Cinematic Color Grading<br>
+Old Photo Restoration<br>
+Premium Album Designs
+
+</p>
+
+<a href="#" class="btn primary">
+Explore AI Studio
+</a>
+
+</div>
+
 </section>
 
 <style>
-  .ai-section {
-    background: linear-gradient(90deg, #1e293b, #0f172a);
-    border-radius: 16px;
-    padding: 40px 20px;
-    margin-top: 50px;
-    text-align: center;
-    box-shadow: 0 0 25px rgba(59,130,246,0.3);
-  }
-  .ai-section iframe {
-    width: 90%;
-    height: 420px;
-    border: 2px solid #3b82f6;
-    border-radius: 12px;
-    box-shadow: 0 0 25px rgba(59,130,246,0.3);
-  }
+
+.service-grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+
+}
+
+.service-card{
+
+background:#181818;
+padding:40px;
+border-radius:20px;
+text-align:center;
+transition:.4s;
+
+}
+
+.service-card:hover{
+
+transform:translateY(-10px);
+
+background:#222;
+
+}
+
+.service-card i{
+
+font-size:45px;
+color:#FFD700;
+margin-bottom:20px;
+
+}
+
+.service-card h3{
+
+margin-bottom:15px;
+
+}
+
+.gallery{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+
+}
+
+.gallery img{
+
+width:100%;
+height:350px;
+object-fit:cover;
+border-radius:15px;
+transition:.4s;
+
+}
+
+.gallery img:hover{
+
+transform:scale(1.05);
+
+}
+
+.ai-box{
+
+background:#181818;
+padding:60px;
+border-radius:25px;
+text-align:center;
+
+}
+
+.ai-box h3{
+
+font-size:38px;
+margin-bottom:20px;
+
+}
+
+.ai-box p{
+
+line-height:2;
+margin-bottom:40px;
+color:#ddd;
+
+}
+
 </style>
+  <!-- ========================= -->
+<!-- PRICING -->
+<!-- ========================= -->
 
-  <section>
-    <h2>Studio Showreel</h2>
-    <p>Watch our descrption.</p>
-    <div style="text-align:center; margin-top:20px;">
-      <!-- Replace the link below with your YouTube or MP4 video -->
-      <iframe 
-  width="90%" 
-  height="450" 
-  src="https://www.youtube.com/embed/8YHS7Z_2f4E?si=BHEDgizPr69A0YSs"
-  title="PRABHU STUDIO Showreel"
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+<section id="pricing">
 
-    </div>
-  </section>
-      <div class="hero-right">
-        <div class="hero-card">
-          <div class="hero-image" role="img" aria-label="Studio hero image"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;color:var(--muted)">
-            <div>
-              <div style="font-weight:800">Featured — Wedding Film</div>
-              <div style="font-size:13px">Shot in Kurnool, 2025</div>
-            </div>
-            <a class="btn-outline" href="#portfolio">See Gallery</a>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="title">
+<h2>Wedding Packages</h2>
+<p>Choose the perfect package for your special day</p>
+</div>
 
-    <!-- SERVICES -->
-    <section id="services">
-      <h3>Our Services</h3>
-      <p class="muted">Professional photography, videography, and design services — all under one roof.</p>
-      <div class="services" style="margin-top:16px">
-        <div class="service"><h4>Wedding Photography</h4><p class="muted">Capturing timeless moments from every ceremony and celebration.</p></div>
-        <div class="service"><h4>Videography</h4><p class="muted">Cinematic storytelling with high-end visuals and editing.</p></div>
-        <div class="service"><h4>Photo Editing</h4><p class="muted">Enhance every shot with color correction and artistic retouching.</p></div>
-        <div class="service"><h4>Passport Photos</h4><p class="muted">Instant, high-quality passport and ID photographs.</p></div>
-        <div class="service"><h4>Outdoor Shoots</h4><p class="muted">Creative portraits and pre/post-wedding shoots in natural light.</p></div>
-        <div class="service"><h4>Album Design</h4><p class="muted">Custom album layouts designed with elegance and precision.</p></div>
-        <div class="service"><h4>4K Video Editing</h4><p class="muted">Professional-grade 4K video production and editing services.</p></div>
-        <div class="service"><h4>Photo Frame Designs & Frame Work</h4><p class="muted">Beautifully designed frames to preserve your memories.</p></div>
-        <div class="service"><h4>Spot Printing</h4><p class="muted">Fast and reliable photo printing right at our studio.</p></div>
-      </div>
-    </section>
+<div class="service-grid">
 
-    <!-- ABOUT -->
-    <section id="about">
-      <h3>About PRABHU STUDIO</h3>
-      <p class="muted">Founded by <strong>K RAJ</strong>, PRABHU STUDIO in Kurnool, Andhra Pradesh has been creating memorable photography and videography experiences for clients since 1990.</p>
-      <div class="about" style="margin-top:18px">
-        <div class="about-card">
-          <p class="muted">Our team blends creativity and professionalism to capture authentic stories with cinematic flair — whether it’s a wedding, event, or portrait session.</p>
-          <ul class="muted" style="margin-top:12px">
-            <li>Two photographers for weddings & events</li>
-            <li>Drone and 4K video services available</li>
-            <li>Custom albums and frame designs</li>
-          </ul>
-        </div>
-        <div style="display:grid;gap:12px">
-          <div class="about-card" style="padding:12px;display:flex;gap:12px;align-items:center">
-            <div class="about-photo" style="width:64px;height:64px;overflow:hidden;">
-              <img src="/raj.jpg" alt="K Raj - Founder" style="width:100%;height:100%;object-fit:cover;">
-            </div>
-            <div>
-              <div style="font-weight:800">K RAJ</div>
-              <div class="muted" style="font-size:13px">Founder • Lead cinematographer, editor</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="service-card">
+<h3>Silver</h3>
+<h2>₹49,999</h2>
+<p>Photography</p>
+<p>Traditional Video</p>
+<p>Basic Album</p>
+<a href="#" class="btn primary">Book Now</a>
+</div>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <h3>Contact</h3>
-      <p class="muted">We’d love to hear about your next event or shoot. Reach us anytime.</p>
-      <div class="contact-grid" style="margin-top:16px">
-        <form id="contactForm" onsubmit="return handleForm(event)">
-          <input name="name" placeholder="Your full name" required />
-          <input name="email" type="email" placeholder="Email address" required />
-          <input name="phone" placeholder="Phone (optional)" />
-          <input name="date" type="date" placeholder="Event date" />
-          <select name="service">
-            <option value="wedding">Wedding Photography</option>
-            <option value="videography">Videography</option>
-            <option value="editing">Editing & Printing</option>
-            <option value="other">Other / Inquiry</option>
-          </select>
-          <textarea name="message" placeholder="Tell us more (location, timings, must-haves)" rows="4"></textarea>
-          <button class="submit">Request Quote</button>
-        </form>
+<div class="service-card">
+<h3>Gold</h3>
+<h2>₹89,999</h2>
+<p>Candid Photography</p>
+<p>Cinematic Video</p>
+<p>Premium Album</p>
+<p>Drone Coverage</p>
+<a href="#" class="btn primary">Book Now</a>
+</div>
 
-        <aside style="background:var(--card);padding:16px;border-radius:12px">
-          <div style="font-weight:800">Visit / Call</div>
-          <div class="muted" style="margin-top:8px">Kurnool, Andhra Pradesh</div>
-          <div style="margin-top:8px">
-            <div class="muted">Phone</div>
-            <div>+91 9985854140</div>
-          </div>
-          <div style="margin-top:10px">
-            <div class="muted">Email</div>
-            <div>karanamrajusmart@gmail.com</div>
-          </div>
-        </aside>
-      </div>
-    </section>
+<div class="service-card">
+<h3>Platinum</h3>
+<h2>Custom</h2>
+<p>Complete Wedding Coverage</p>
+<p>AI Studio Editing</p>
+<p>Luxury Album</p>
+<p>Drone + LED + Live Streaming</p>
+<a href="#" class="btn primary">Contact Us</a>
+</div>
 
-    <footer>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-        <div class="muted">© 2025 PRABHU STUDIO — All rights reserved</div>
-        <div class="muted">Follow us: 
-          <a href="#" style="color:var(--accent)">Instagram</a> • 
-          <a href="http://www.youtube.com/@rk_in" style="color:var(--accent)">YouTube</a> • 
-          <a href="#" style="color:var(--accent)">Facebook</a>
-        </div>
-      </div>
-    </footer>
-  </div>
+</div>
 
-  <div class="lightbox" id="lightbox"><img src="" alt="Expanded photo" id="lightboxImg"></div>
+</section>
 
-  <script>
-    const toggle=document.querySelector('.menu-toggle');
-    const nav=document.querySelector('.nav');
-    toggle?.addEventListener('click',()=>{const open=nav.style.display==='flex';nav.style.display=open?'none':'flex';toggle.setAttribute('aria-expanded',String(!open))});
-    const photos=document.querySelectorAll('.photo');
-    const lightbox=document.getElementById('lightbox');
-    const lbImg=document.getElementById('lightboxImg');
-    photos.forEach(p=>{p.addEventListener('click',()=>{const src=p.dataset.src||p.querySelector('img').src;lbImg.src=src;lightbox.classList.add('open')})});
-    lightbox.addEventListener('click',(e)=>{if(e.target===lightbox||e.target===lbImg)lightbox.classList.remove('open')});
-    function handleForm(e){e.preventDefault();const f=e.target;const data=new FormData(f);const name=data.get('name')||'Client';const email=data.get('email')||'';const service=data.get('service')||'Inquiry';const message=data.get('message')||'';const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\nService: ${service}\n\nMessage:\n${message}`);window.location.href=`mailto:karanamrajusmart@gmail.com?subject=${encodeURIComponent('New booking request from '+name)}&body=${body}`;return false;}
-    document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('lightbox').classList.remove('open')});
-  </script>
+<!-- ========================= -->
+<!-- TESTIMONIALS -->
+<!-- ========================= -->
+
+<section id="reviews">
+
+<div class="title">
+<h2>Happy Couples</h2>
+<p>What our clients say</p>
+</div>
+
+<div class="service-grid">
+
+<div class="service-card">
+★★★★★
+<h3>Rahul & Priya</h3>
+<p>"Amazing photography and cinematic video. Highly recommended."</p>
+</div>
+
+<div class="service-card">
+★★★★★
+<h3>Arun & Keerthi</h3>
+<p>"Beautiful album design and excellent team support."</p>
+</div>
+
+<div class="service-card">
+★★★★★
+<h3>Sandeep & Swathi</h3>
+<p>"Best wedding studio. Our memories are captured perfectly."</p>
+</div>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- CONTACT -->
+<!-- ========================= -->
+
+<section id="contact">
+
+<div class="title">
+<h2>Contact Us</h2>
+<p>Let's make your memories unforgettable.</p>
+</div>
+
+<div class="service-card">
+
+<h3>PRABHU STUDIO</h3>
+
+<p>📍 Your Studio Address</p>
+
+<p>📞 +91 XXXXX XXXXX</p>
+
+<p>✉ info@prabhustudios.com</p>
+
+<p>🌐 www.prabhustudios.com</p>
+
+<br>
+
+<a href="#" class="btn primary">
+Book Appointment
+</a>
+
+</div>
+
+</section>
+
+<!-- ========================= -->
+<!-- FOOTER -->
+<!-- ========================= -->
+
+<footer>
+
+<div style="text-align:center;padding:40px;background:#090909;">
+
+<h2 style="color:#FFD700;">
+PRABHU STUDIO
+</h2>
+
+<p style="margin:15px 0;color:#aaa;">
+Wedding Photography • Cinematography • AI Studio
+</p>
+
+<p style="color:#666;">
+© 2026 PRABHU STUDIO. All Rights Reserved.
+</p>
+
+</div>
+
+</footer>
+
+<script>
+
+const sections=document.querySelectorAll("section");
+
+window.addEventListener("scroll",()=>{
+
+sections.forEach(section=>{
+
+const top=window.scrollY;
+const offset=section.offsetTop-400;
+
+if(top>offset){
+
+section.style.opacity="1";
+section.style.transform="translateY(0px)";
+
+}
+
+});
+
+});
+
+sections.forEach(section=>{
+
+section.style.opacity="0";
+section.style.transform="translateY(60px)";
+section.style.transition="1s";
+
+});
+
+</script>
+
 </body>
 </html>
 
-
-
-
+</section>
