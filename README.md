@@ -1,181 +1,24 @@
-# 📸 PRABHU STUDIO Website
+# PRABHU STUDIO — secure billing portal
 
-A modern, responsive photography and videography studio website built with **HTML, CSS, and JavaScript**.
+This version adds a staff-only billing dashboard to the supplied studio landing page. It includes server-side password hashing (scrypt), HTTP-only login cookies, CSRF protection, login rate limiting, security headers, invoice creation, and paid-status tracking.
 
-## 🌟 Overview
+## Run locally
 
-PRABHU STUDIO is a professional photography and videography studio located in **Kurnool, Andhra Pradesh, India**.
+Use Node.js 20 or later. On first launch, set a unique owner email and a strong password (at least 12 characters with uppercase, lowercase, and a number). The password is hashed before it is written to disk.
 
-The website showcases the studio's services, portfolio, AI Studio, contact information, and booking options in a clean and modern interface.
-
----
-
-## ✨ Features
-
-- Responsive Design
-- Modern Hero Section
-- Studio Services
-- AI Studio Section
-- Embedded YouTube Videos
-- About Founder Section
-- Contact Form
-- Mobile Friendly Navigation
-- Image Lightbox
-- Beautiful Gradient UI
-- CSS Animations
-- Pure HTML/CSS/JavaScript (No Framework)
-
----
-
-## 🛠 Technologies Used
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-- Google Fonts (Inter)
-- YouTube Embed API
-
----
-
-## 📁 Project Structure
-
-```
-project/
-│
-├── index.html
-├── logo.png
-├── raj.jpg
-├── images/
-│   └── studio-hero.jpg
-│
-├── css/
-│   └── (optional)
-│
-├── js/
-│   └── (optional)
-│
-└── README.md
+```powershell
+$env:STUDIO_ADMIN_EMAIL = "owner@prabhustudio.in"
+$env:STUDIO_ADMIN_PASSWORD = "Use-a-unique-strong-password-123"
+node .\server.js
 ```
 
----
+Open `http://localhost:3000`, choose **Staff sign in**, then use the email and password configured above.
 
-## 📷 Website Sections
+The generated `data/` folder holds the password hash and billing records. Keep it private, back it up securely, and do not commit it to source control.
 
-### Home
-- Hero Banner
-- Call-to-Action Buttons
+## Production notes
 
-### AI Studio
-- AI Cinematic Showcase
-- Embedded YouTube Video
-
-### Showreel
-- Studio Promotional Video
-
-### Services
-
-- Wedding Photography
-- Videography
-- Photo Editing
-- Passport Photos
-- Outdoor Shoots
-- Album Design
-- 4K Video Editing
-- Frame Designs
-- Spot Printing
-
-### About
-
-- Founder Information
-- Studio History
-- Team Introduction
-
-### Contact
-
-- Contact Form
-- Email
-- Phone
-- Studio Location
-
----
-
-## 📱 Responsive
-
-Optimized for:
-
-- Desktop
-- Laptop
-- Tablet
-- Mobile
-
----
-
-## 🚀 How to Run
-
-### Option 1
-
-Simply open:
-
-```
-index.html
-```
-
-in your browser.
-
-### Option 2
-
-Use VS Code Live Server.
-
-1. Install Live Server Extension
-2. Right Click
-3. Open with Live Server
-
----
-
-## 📞 Contact
-
-**PRABHU STUDIO**
-
-📍 Kurnool, Andhra Pradesh
-
-📧 karanamrajusmart@gmail.com
-
-📱 +91 9985854140
-
----
-
-## 🎥 YouTube
-
-https://www.youtube.com/@rk_in
-
----
-
-## 📸 Services
-
-- Wedding Photography
-- Cinematic Videography
-- Drone Coverage
-- AI Studio
-- Album Design
-- Printing
-- Live Streaming
-- Photo Editing
-- 4K Video Production
-
----
-
-## 📄 License
-
-This project is for PRABHU STUDIO.
-
-All Rights Reserved © PRABHU STUDIO.
-
----
-
-## 👨‍💻 Developed By
-
-K RAJ
-
-Founder — PRABHU STUDIO
-
-Perfect Shots • Stunning Edits • Create a Trend
+- Set `NODE_ENV=production` and serve the app only over HTTPS; this enables the `Secure` cookie flag.
+- Place the app behind a TLS-enabled reverse proxy and set a restrictive firewall rule.
+- Use a managed database and persistent session store before hosting for multiple staff members or multiple server instances.
+- The **Mark paid** control records payment status only. It never accepts card, UPI, or bank details. Connect a compliant processor such as Razorpay or Stripe using server-side credentials and webhook signature verification before accepting payments online.
