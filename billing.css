@@ -1,0 +1,49 @@
+.billing-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.summary-card strong {
+  font-size: 1.12rem;
+  overflow-wrap: anywhere;
+}
+
+.billing-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10rem;
+  gap: .75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(5, 16, 29, .25);
+}
+
+.billing-toolbar label {
+  display: grid;
+  gap: .3rem;
+  color: #dce6f4;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.invoice-result-count {
+  min-height: 1.3em;
+  margin: .6rem 0 0;
+  font-size: .78rem;
+}
+
+.dashboard-grid {
+  margin-top: 1rem;
+}
+
+.status.overdue {
+  background: rgba(255, 112, 98, .13);
+  color: #ffb5ac;
+}
+
+@media (max-width: 900px) {
+  .billing-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .billing-summary, .billing-toolbar { grid-template-columns: 1fr; }
+}
