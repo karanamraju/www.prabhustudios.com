@@ -7,6 +7,9 @@ const billingGate = $("billingGate");
 const dashboard = $("dashboard");
 const invoiceList = $("invoiceList");
 const billingSummary = $("billingSummary");
+const invoiceSearch = $("invoiceSearch");
+const invoiceStatus = $("invoiceStatus");
+const invoiceResultCount = $("invoiceResultCount");
 
 function showMessage(element, message = "", kind = "") {
   element.textContent = message;
@@ -62,15 +65,44 @@ function makeSummary(label, value) {
   return card;
 }
 
+function isOverdue(invoice) {
+  if (invoice.status !== "unpaid") return false;
+  const dueAt = new Date(`${invoice.dueDate}T23:59:59`).getTime();
+  return Number.isFinite(dueAt) && dueAt < Date.now();
+}
+
+function displayStatus(invoice) {
+  return isOverdue(invoice) ? "overdue" : invoice.status;
+}
+
+function filteredInvoices() {
+  const query = invoiceSearch.value.trim().toLowerCase();
+  const statusFilter = invoiceStatus.value;
+  return state.invoices.filter((invoice) => {
+    const statusMatches = statusFilter === "all" || displayStatus(invoice) === statusFilter;
+    if (!statusMatches) return false;
+    if (!query) return true;
+    return [invoice.clientName, invoice.clientEmail, invoice.id, invoice.service].some((value) => String(value || "").toLowerCase().includes(query));
+  });
+}
+
 function renderInvoices() {
   const invoices = state.invoices;
+  const visibleInvoices = filteredInvoices();
   const unpaid = invoices.filter((invoice) => invoice.status === "unpaid");
+  const paid = invoices.filter((invoice) => invoice.status === "paid");
+  const overdue = invoices.filter(isOverdue);
+  const totalBilled = invoices.reduce((total, invoice) => total + Number(invoice.amount), 0);
+  const received = paid.reduce((total, invoice) => total + Number(invoice.amount), 0);
   const outstanding = unpaid.reduce((total, invoice) => total + Number(invoice.amount), 0);
+  const overdueAmount = overdue.reduce((total, invoice) => total + Number(invoice.amount), 0);
   billingSummary.replaceChildren(
-    makeSummary("Total invoices", String(invoices.length)),
+    makeSummary("Total billed", formatMoney(totalBilled)),
+    makeSummary("Received", formatMoney(received)),
     makeSummary("Outstanding", formatMoney(outstanding)),
-    makeSummary("Paid invoices", String(invoices.length - unpaid.length)),
+    makeSummary("Overdue", overdue.length ? `${overdue.length} - ${formatMoney(overdueAmount)}` : "None"),
   );
+  invoiceResultCount.textContent = invoices.length ? `Showing ${visibleInvoices.length} of ${invoices.length} invoice${invoices.length === 1 ? "" : "s"}.` : "";
   invoiceList.replaceChildren();
   if (!invoices.length) {
     const empty = document.createElement("p");
@@ -79,7 +111,14 @@ function renderInvoices() {
     invoiceList.append(empty);
     return;
   }
-  for (const invoice of invoices) {
+  if (!visibleInvoices.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "No invoices match these filters.";
+    invoiceList.append(empty);
+    return;
+  }
+  for (const invoice of visibleInvoices) {
     const row = document.createElement("article");
     row.className = "invoice-row";
     const detail = document.createElement("div");
@@ -88,15 +127,16 @@ function renderInvoices() {
     const descriptor = document.createElement("small");
     descriptor.textContent = `${invoice.id} · ${invoice.service}`;
     const date = document.createElement("small");
-    date.textContent = `Due ${new Date(`${invoice.dueDate}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`;
+    const dueLabel = isOverdue(invoice) ? "Overdue since" : "Due";
+    date.textContent = `${dueLabel} ${new Date(`${invoice.dueDate}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`;
     detail.append(title, descriptor, date);
     const amount = document.createElement("div");
     amount.className = "invoice-amount";
     const value = document.createElement("strong");
     value.textContent = formatMoney(invoice.amount);
     const status = document.createElement("span");
-    status.className = `status ${invoice.status}`;
-    status.textContent = invoice.status;
+    status.className = `status ${displayStatus(invoice)}`;
+    status.textContent = displayStatus(invoice);
     amount.append(value, status);
     if (invoice.status === "unpaid") {
       const button = document.createElement("button");
@@ -159,13 +199,15 @@ function openLogin() {
 $("signInButton").addEventListener("click", openLogin);
 $("billingSignInButton").addEventListener("click", openLogin);
 $("refreshInvoices").addEventListener("click", loadInvoices);
+invoiceSearch.addEventListener("input", renderInvoices);
+invoiceStatus.addEventListener("change", renderInvoices);
 
 $("loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const submit = event.submitter;
   submit.disabled = true;
   showMessage($("loginMessage"), "Signing in…");
-  const form = new FormData(event.currentTarget);
+  const form = new FormData(formElement);
   try {
     const session = await request("/api/auth/login", { method: "POST", body: JSON.stringify({ email: form.get("email"), password: form.get("password") }) });
     setSignedIn(session);
@@ -186,6 +228,7 @@ $("signOutButton").addEventListener("click", async () => {
 
 $("invoiceForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  const formElement = event.currentTarget;
   const submit = event.submitter;
   submit.disabled = true;
   showMessage($("invoiceMessage"), "Creating invoice…");
@@ -193,7 +236,7 @@ $("invoiceForm").addEventListener("submit", async (event) => {
   const payload = Object.fromEntries(form.entries());
   try {
     const result = await request("/api/billing/invoices", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken }, body: JSON.stringify(payload) });
-    event.currentTarget.reset();
+    formElement.reset();
     setDefaultDueDate();
     showMessage($("invoiceMessage"), `${result.invoice.id} created successfully.`, "success");
     await loadInvoices();

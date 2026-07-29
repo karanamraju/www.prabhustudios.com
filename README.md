@@ -16,6 +16,15 @@ Open `http://localhost:3000`, choose **Staff sign in**, then use the email and p
 
 The generated `data/` folder holds the password hash and billing records. Keep it private, back it up securely, and do not commit it to source control.
 
+## Use the billing dashboard
+
+1. Sign in with the owner email and password that you configured at first launch.
+2. Create an invoice with the client, service, amount, and due date.
+3. Use the search box and status filter to find invoices quickly. Overdue invoices are calculated from their due date.
+4. Once payment is confirmed outside the website, select **Mark paid**. The dashboard then updates the received and outstanding totals.
+
+The portal records invoice status only. It does not charge a card, UPI account, or bank account.
+
 ## Production notes
 
 - Set `NODE_ENV=production` and serve the app only over HTTPS; this enables the `Secure` cookie flag.
