@@ -10,6 +10,37 @@ const billingSummary = $("billingSummary");
 const invoiceSearch = $("invoiceSearch");
 const invoiceStatus = $("invoiceStatus");
 const invoiceResultCount = $("invoiceResultCount");
+const heroCarousel = document.querySelector(".hero-carousel");
+const heroSlides = heroCarousel ? Array.from(heroCarousel.querySelectorAll(".hero-slide")) : [];
+let heroSlideIndex = 0;
+let heroCarouselTimer;
+
+function showHeroSlide(index) {
+  if (!heroSlides.length) return;
+  heroSlideIndex = (index + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((slide, slideIndex) => slide.classList.toggle("is-active", slideIndex === heroSlideIndex));
+}
+
+function pauseHeroCarousel() {
+  window.clearInterval(heroCarouselTimer);
+  heroCarouselTimer = undefined;
+}
+
+function startHeroCarousel() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || heroSlides.length < 2) return;
+  pauseHeroCarousel();
+  heroCarouselTimer = window.setInterval(() => showHeroSlide(heroSlideIndex + 1), 5000);
+}
+
+if (heroSlides.length > 1) {
+  $("heroPrevious").addEventListener("click", () => { showHeroSlide(heroSlideIndex - 1); startHeroCarousel(); });
+  $("heroNext").addEventListener("click", () => { showHeroSlide(heroSlideIndex + 1); startHeroCarousel(); });
+  heroCarousel.addEventListener("mouseenter", pauseHeroCarousel);
+  heroCarousel.addEventListener("mouseleave", startHeroCarousel);
+  heroCarousel.addEventListener("focusin", pauseHeroCarousel);
+  heroCarousel.addEventListener("focusout", startHeroCarousel);
+  startHeroCarousel();
+}
 
 function showMessage(element, message = "", kind = "") {
   element.textContent = message;
@@ -204,6 +235,7 @@ invoiceStatus.addEventListener("change", renderInvoices);
 
 $("loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  const formElement = event.currentTarget;
   const submit = event.submitter;
   submit.disabled = true;
   showMessage($("loginMessage"), "Signing in…");
@@ -238,7 +270,9 @@ $("invoiceForm").addEventListener("submit", async (event) => {
     const result = await request("/api/billing/invoices", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken }, body: JSON.stringify(payload) });
     formElement.reset();
     setDefaultDueDate();
-    showMessage($("invoiceMessage"), `${result.invoice.id} created successfully.`, "success");
+    const notifiedChannels = (result.clientNotifications || []).filter((notification) => notification.status === "sent").map((notification) => notification.channel);
+    const clientNotice = notifiedChannels.length ? ` Client notified by ${notifiedChannels.join(" and ")}.` : payload.clientPhone ? " Client notification needs Twilio and a public website URL to be configured." : "";
+    showMessage($("invoiceMessage"), `${result.invoice.id} created and PDF emailed to ${result.emailedTo}.${clientNotice}`, "success");
     await loadInvoices();
   } catch (error) {
     showMessage($("invoiceMessage"), error.message, "error");

@@ -1,0 +1,54 @@
+/* A subtle founder watermark used on the public website and billing workspace. */
+body {
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  right: clamp(1rem, 5vw, 5rem);
+  bottom: clamp(1rem, 5vw, 4rem);
+  width: min(24vw, 300px);
+  aspect-ratio: 3 / 4;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/JAMES.JPG") center / cover no-repeat;
+  border-radius: 24px;
+  opacity: .1;
+  filter: saturate(.8) contrast(1.08);
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+#billing .billing-gate,
+#billing .dashboard {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+#billing .billing-gate::before,
+#billing .dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/JAMES.JPG") 88% center / min(260px, 46%) auto no-repeat;
+  opacity: .1;
+  filter: saturate(.75) contrast(1.05);
+}
+
+#billing .billing-gate > *,
+#billing .dashboard > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 620px) {
+  body::before { width: 170px; opacity: .08; }
+  #billing .billing-gate::before,
+  #billing .dashboard::before { background-size: 210px auto; opacity: .08; }
+}

@@ -1,0 +1,110 @@
+.hero-art {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  background: #081828;
+}
+
+.hero-art > .film-card {
+  display: none;
+}
+
+.hero-carousel {
+  position: relative;
+  min-height: 430px;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 700ms ease;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(3, 12, 22, .84), transparent 62%);
+}
+
+.hero-slide figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
+}
+
+.hero-slide figcaption span,
+.hero-slide figcaption strong {
+  display: block;
+}
+
+.hero-slide figcaption span {
+  margin-bottom: .28rem;
+  color: var(--accent-light);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.hero-slide figcaption strong {
+  max-width: 18rem;
+  font-size: 1.28rem;
+  line-height: 1.15;
+}
+
+.carousel-control {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 50%;
+  background: rgba(5, 16, 29, .55);
+  color: #fff;
+  cursor: pointer;
+  font: 400 2rem/1 Georgia, serif;
+  transform: translateY(-50%);
+  transition: background 150ms ease;
+}
+
+.carousel-control:hover {
+  background: rgba(5, 16, 29, .85);
+}
+
+.carousel-control.previous { left: 1rem; }
+.carousel-control.next { right: 1rem; }
+
+@media (max-width: 900px) {
+  .hero-carousel { min-height: 300px; }
+}
+
+@media (max-width: 620px) {
+  .hero-carousel { min-height: 270px; }
+  .hero-slide figcaption { right: 1.1rem; bottom: 1.15rem; left: 1.1rem; }
+  .hero-slide figcaption strong { font-size: 1.08rem; }
+  .carousel-control { width: 36px; height: 36px; }
+  .carousel-control.previous { left: .7rem; }
+  .carousel-control.next { right: .7rem; }
+}
