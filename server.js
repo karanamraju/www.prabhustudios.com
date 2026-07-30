@@ -1,4 +1,5 @@
 "use strict";
+
 // Minimal dependency-free server for the studio website. It intentionally keeps
 // authentication and billing data on the server; browser storage is never used
 // for passwords, sessions, or invoices.
@@ -744,13 +745,8 @@ const server = http.createServer(async (req, res) => {
     return json(res, error.message === "Request too large" ? 413 : 500, { error: "Something went wrong. Please try again." });
   }
 });
-initialiseData()
-  .then(() =>
-    server.listen(PORT, "0.0.0.0", () => {
-      console.log(`PRABHU STUDIO secure portal is running on port ${PORT}`);
-    })
-  )
-  .catch((error) => {
-    console.error("Unable to start server:", error);
-    process.exit(1);
-  });
+
+initialiseData().then(() => server.listen(PORT, "0.0.0.0", () => console.log(`PRABHU STUDIO secure portal is running on port ${PORT}`))).catch((error) => {
+  console.error(`Startup aborted: ${error.message}`);
+  process.exit(1);
+});
