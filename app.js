@@ -51,13 +51,13 @@ function showMessage(element, message = "", kind = "") {
 }
 
 // ==========================================
-// RENDER SERVER CONNECTION ADDED HERE
+// RENDER SERVER CONNECTION
 // ==========================================
 const API_BASE_URL = "https://prabhu-studio-billing.onrender.com";
 
 async function request(url, options = {}) {
   const response = await fetch(API_BASE_URL + url, {
-    credentials: "include", // Changed from 'same-origin' to 'include' for Cross-Origin
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options,
   });
@@ -419,6 +419,8 @@ $("loginForm").addEventListener("submit", async (event) => {
     setSignedIn(session);
     $("loginPassword").value = "";
     loginDialog.close();
+    // లాగిన్ సక్సెస్ అయిన వెంటనే బిల్లింగ్ సెక్షన్‌కి ఆటోమేటిక్‌గా నావిగేట్ అవుతుంది (స్క్రోల్ అవుతుంది)
+    $("billing").scrollIntoView({ behavior: "smooth", block: "start" });
     await loadInvoices();
     await loadStaff();
   } catch (error) {
@@ -577,6 +579,7 @@ async function initialise() {
     const session = await request("/api/auth/session");
     if (session.authenticated) {
       setSignedIn(session);
+      $("billing").scrollIntoView({ behavior: "smooth", block: "start" });
       await loadInvoices();
       await loadStaff();
     } else setSignedOut();
