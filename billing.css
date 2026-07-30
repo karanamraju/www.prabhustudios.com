@@ -1,0 +1,199 @@
+.billing-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.summary-card strong {
+  font-size: 1.12rem;
+  overflow-wrap: anywhere;
+}
+
+.billing-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 10rem;
+  gap: .75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(5, 16, 29, .25);
+}
+
+.billing-toolbar label {
+  display: grid;
+  gap: .3rem;
+  color: #dce6f4;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.invoice-result-count {
+  min-height: 1.3em;
+  margin: .6rem 0 0;
+  font-size: .78rem;
+}
+
+.dashboard-grid {
+  margin-top: 1rem;
+}
+
+.status.overdue {
+  background: rgba(255, 112, 98, .13);
+  color: #ffb5ac;
+}
+
+.staff-admin {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(15rem, 1fr) minmax(15rem, 1.1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(5, 16, 29, .38);
+}
+
+.staff-admin.is-hidden { display: none; }
+
+.staff-admin h4,
+.staff-admin h5 {
+  margin: 0;
+}
+
+.staff-admin-intro {
+  align-self: start;
+}
+
+.staff-admin-intro .muted {
+  margin: .7rem 0 0;
+  font-size: .8rem;
+}
+
+.staff-form {
+  display: grid;
+  gap: .65rem;
+}
+
+.staff-form label {
+  display: grid;
+  gap: .3rem;
+  color: #dce6f4;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.staff-form .button {
+  width: 100%;
+}
+
+.staff-list-panel {
+  min-width: 0;
+}
+
+.staff-list {
+  display: grid;
+  gap: .55rem;
+  max-height: 18rem;
+  overflow: auto;
+  margin-top: .65rem;
+}
+
+.staff-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .75rem;
+  align-items: center;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(11, 33, 55, .48);
+}
+
+.staff-row > div:first-child {
+  display: grid;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.staff-row small {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.staff-row > div:last-child {
+  display: grid;
+  justify-items: end;
+  gap: .4rem;
+}
+
+.staff-password-reset {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-column: 1 / -1;
+  gap: .5rem;
+  align-items: end;
+  padding-top: .15rem;
+}
+
+.staff-password-reset label {
+  display: grid;
+  gap: .25rem;
+  color: #dce6f4;
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+.staff-password-reset .form-message {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.staff-status {
+  border-radius: 999px;
+  padding: .15rem .45rem;
+  font-size: .68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.staff-status.active { background: rgba(76, 211, 162, .13); color: #9aeccc; }
+.staff-status.disabled { background: rgba(255, 112, 98, .13); color: #ffb5ac; }
+
+.staff-toggle {
+  border: 1px solid rgba(255, 189, 131, .55);
+  border-radius: 7px;
+  padding: .32rem .5rem;
+  background: transparent;
+  color: #ffd6ad;
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+}
+
+.forgot-password {
+  margin-top: .8rem;
+}
+
+.owner-password-reset {
+  margin-top: .8rem;
+  padding: .85rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(5, 16, 29, .32);
+}
+
+.owner-password-reset.is-hidden { display: none; }
+
+.owner-password-reset .muted {
+  margin: 0 0 .8rem;
+  font-size: .78rem;
+}
+
+@media (max-width: 900px) {
+  .billing-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .staff-admin { grid-template-columns: 1fr 1fr; }
+  .staff-admin-intro { grid-column: 1 / -1; }
+}
+
+@media (max-width: 620px) {
+  .billing-summary, .billing-toolbar, .staff-admin { grid-template-columns: 1fr; }
+  .staff-password-reset { grid-template-columns: 1fr; }
+}
