@@ -145,6 +145,18 @@
           </form>
           <div class="invoice-list-panel"><div class="list-heading"><h4>Invoices</h4><button class="text-button" type="button" id="refreshInvoices">Refresh</button></div><div class="invoice-list" id="invoiceList"><p class="muted">Loading invoices…</p></div></div>
         </div>
+        <section class="staff-admin is-hidden" id="staffAdmin" aria-labelledby="staffAdminTitle">
+          <div class="staff-admin-intro"><p class="eyebrow">Owner only</p><h4 id="staffAdminTitle">Staff billing accounts</h4><p class="muted">Give each employee a separate login. Billing employees can create and view invoices, but cannot mark payments paid or manage accounts.</p></div>
+          <form class="staff-form" id="staffForm">
+            <h5>Add billing employee</h5>
+            <label>Employee name<input name="name" autocomplete="name" maxlength="80" required></label>
+            <label>Employee email<input name="email" type="email" autocomplete="email" maxlength="120" required></label>
+            <label>Employee password <span class="optional">12+ characters, upper/lowercase and number</span><input name="password" type="password" autocomplete="new-password" minlength="12" required></label>
+            <button class="button" type="submit">Create employee login</button>
+            <p class="form-message" id="staffMessage" role="status"></p>
+          </form>
+          <div class="staff-list-panel"><div class="list-heading"><h5>Active and disabled staff</h5><button class="text-button" type="button" id="refreshStaff">Refresh</button></div><div class="staff-list" id="staffList"><p class="muted">Loading staff</p></div></div>
+        </section>
         <p class="payment-notice">Payment status is recorded manually. This portal never collects card, UPI, or bank details.</p>
       </div>
     </section>

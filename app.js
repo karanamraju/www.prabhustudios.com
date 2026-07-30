@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { authenticated: false, csrfToken: null, email: "", invoices: [] };
+const state = { authenticated: false, csrfToken: null, email: "", role: "", invoices: [], staff: [] };
 const $ = (id) => document.getElementById(id);
 const loginDialog = $("loginDialog");
 const billingGate = $("billingGate");
@@ -69,19 +69,28 @@ function setSignedOut() {
   state.authenticated = false;
   state.csrfToken = null;
   state.email = "";
+  state.role = "";
   state.invoices = [];
+  state.staff = [];
   billingGate.classList.remove("is-hidden");
   dashboard.classList.add("is-hidden");
+  $("staffAdmin").classList.add("is-hidden");
   $("signInButton").textContent = "Staff sign in";
+}
+
+function isOwner() {
+  return state.role === "owner";
 }
 
 function setSignedIn(session) {
   state.authenticated = true;
   state.csrfToken = session.csrfToken;
   state.email = session.email;
+  state.role = session.role;
   billingGate.classList.add("is-hidden");
   dashboard.classList.remove("is-hidden");
-  $("accountEmail").textContent = session.email;
+  $("staffAdmin").classList.toggle("is-hidden", !isOwner());
+  $("accountEmail").textContent = `${session.email} - ${isOwner() ? "Owner" : "Billing employee"}`;
   $("signInButton").textContent = "Billing dashboard";
 }
 
@@ -161,6 +170,11 @@ function renderInvoices() {
     const dueLabel = isOverdue(invoice) ? "Overdue since" : "Due";
     date.textContent = `${dueLabel} ${new Date(`${invoice.dueDate}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}`;
     detail.append(title, descriptor, date);
+    if (invoice.createdBy && invoice.createdBy.name) {
+      const createdBy = document.createElement("small");
+      createdBy.textContent = `Created by ${invoice.createdBy.name}`;
+      detail.append(createdBy);
+    }
     const amount = document.createElement("div");
     amount.className = "invoice-amount";
     const value = document.createElement("strong");
@@ -169,7 +183,7 @@ function renderInvoices() {
     status.className = `status ${displayStatus(invoice)}`;
     status.textContent = displayStatus(invoice);
     amount.append(value, status);
-    if (invoice.status === "unpaid") {
+    if (invoice.status === "unpaid" && isOwner()) {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "mark-paid";
@@ -202,6 +216,70 @@ async function loadInvoices() {
   }
 }
 
+function renderStaff() {
+  const staffList = $("staffList");
+  staffList.replaceChildren();
+  if (!state.staff.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "No staff accounts yet.";
+    staffList.append(empty);
+    return;
+  }
+  for (const staff of state.staff) {
+    const row = document.createElement("article");
+    row.className = "staff-row";
+    const details = document.createElement("div");
+    const name = document.createElement("strong");
+    name.textContent = staff.name;
+    const email = document.createElement("small");
+    email.textContent = staff.email;
+    const role = document.createElement("small");
+    role.textContent = staff.role === "owner" ? "Owner" : "Billing employee";
+    details.append(name, email, role);
+    const controls = document.createElement("div");
+    const status = document.createElement("span");
+    status.className = `staff-status ${staff.status}`;
+    status.textContent = staff.status;
+    controls.append(status);
+    if (staff.role !== "owner") {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "staff-toggle";
+      button.textContent = staff.status === "active" ? "Disable" : "Enable";
+      button.addEventListener("click", () => toggleStaffStatus(staff, button));
+      controls.append(button);
+    }
+    row.append(details, controls);
+    staffList.append(row);
+  }
+}
+
+async function loadStaff() {
+  if (!state.authenticated || !isOwner()) return;
+  try {
+    const data = await request("/api/billing/staff");
+    state.staff = data.staff || [];
+    renderStaff();
+  } catch (error) {
+    showMessage($("staffMessage"), error.message, "error");
+  }
+}
+
+async function toggleStaffStatus(staff, button) {
+  button.disabled = true;
+  try {
+    await request(`/api/billing/staff/${encodeURIComponent(staff.id)}/${staff.status === "active" ? "disable" : "enable"}`, {
+      method: "POST",
+      headers: { "X-CSRF-Token": state.csrfToken },
+    });
+    await loadStaff();
+  } catch (error) {
+    button.disabled = false;
+    showMessage($("staffMessage"), error.message, "error");
+  }
+}
+
 async function markPaid(invoiceId, button) {
   button.disabled = true;
   button.textContent = "Saving…";
@@ -230,6 +308,7 @@ function openLogin() {
 $("signInButton").addEventListener("click", openLogin);
 $("billingSignInButton").addEventListener("click", openLogin);
 $("refreshInvoices").addEventListener("click", loadInvoices);
+$("refreshStaff").addEventListener("click", loadStaff);
 invoiceSearch.addEventListener("input", renderInvoices);
 invoiceStatus.addEventListener("change", renderInvoices);
 
@@ -246,6 +325,7 @@ $("loginForm").addEventListener("submit", async (event) => {
     $("loginPassword").value = "";
     loginDialog.close();
     await loadInvoices();
+    await loadStaff();
   } catch (error) {
     showMessage($("loginMessage"), error.message, "error");
   } finally {
@@ -281,6 +361,29 @@ $("invoiceForm").addEventListener("submit", async (event) => {
   }
 });
 
+$("staffForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formElement = event.currentTarget;
+  const submit = event.submitter;
+  submit.disabled = true;
+  showMessage($("staffMessage"), "Creating employee login...");
+  const form = new FormData(formElement);
+  try {
+    const result = await request("/api/billing/staff", {
+      method: "POST",
+      headers: { "X-CSRF-Token": state.csrfToken },
+      body: JSON.stringify({ name: form.get("name"), email: form.get("email"), password: form.get("password") }),
+    });
+    formElement.reset();
+    showMessage($("staffMessage"), `${result.staff.name} can now sign in with the new billing employee account.`, "success");
+    await loadStaff();
+  } catch (error) {
+    showMessage($("staffMessage"), error.message, "error");
+  } finally {
+    submit.disabled = false;
+  }
+});
+
 function setDefaultDueDate() {
   const due = new Date();
   due.setDate(due.getDate() + 7);
@@ -295,6 +398,7 @@ async function initialise() {
     if (session.authenticated) {
       setSignedIn(session);
       await loadInvoices();
+      await loadStaff();
     } else setSignedOut();
   } catch { setSignedOut(); }
 }
