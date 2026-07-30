@@ -50,9 +50,14 @@ function showMessage(element, message = "", kind = "") {
   element.className = `form-message ${kind}`;
 }
 
+// ==========================================
+// RENDER SERVER CONNECTION ADDED HERE
+// ==========================================
+const API_BASE_URL = "https://prabhu-studio-billing.onrender.com";
+
 async function request(url, options = {}) {
-  const response = await fetch(url, {
-    credentials: "same-origin",
+  const response = await fetch(API_BASE_URL + url, {
+    credentials: "include", // Changed from 'same-origin' to 'include' for Cross-Origin
     headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options,
   });
@@ -63,6 +68,7 @@ async function request(url, options = {}) {
   }
   return body;
 }
+// ==========================================
 
 function formatMoney(amount) {
   return new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(amount);
