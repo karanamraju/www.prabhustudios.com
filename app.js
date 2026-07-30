@@ -1,6 +1,6 @@
 "use strict";
 
-const state = { authenticated: false, csrfToken: null, email: "", role: "", invoices: [], staff: [] };
+const state = { authenticated: false, csrfToken: null, email: "", role: "", invoices: [], staff: [], ownerResetToken: null };
 const $ = (id) => document.getElementById(id);
 const loginDialog = $("loginDialog");
 const billingGate = $("billingGate");
@@ -10,6 +10,9 @@ const billingSummary = $("billingSummary");
 const invoiceSearch = $("invoiceSearch");
 const invoiceStatus = $("invoiceStatus");
 const invoiceResultCount = $("invoiceResultCount");
+const serviceSelect = $("serviceSelect");
+const customServiceField = $("customServiceField");
+const customServiceInput = $("customServiceInput");
 const heroCarousel = document.querySelector(".hero-carousel");
 const heroSlides = heroCarousel ? Array.from(heroCarousel.querySelectorAll(".hero-slide")) : [];
 let heroSlideIndex = 0;
@@ -248,11 +251,62 @@ function renderStaff() {
       button.className = "staff-toggle";
       button.textContent = staff.status === "active" ? "Disable" : "Enable";
       button.addEventListener("click", () => toggleStaffStatus(staff, button));
-      controls.append(button);
+      const resetButton = document.createElement("button");
+      resetButton.type = "button";
+      resetButton.className = "staff-toggle";
+      resetButton.textContent = "Reset password";
+      resetButton.addEventListener("click", () => showPasswordReset(staff, row));
+      controls.append(button, resetButton);
     }
     row.append(details, controls);
     staffList.append(row);
   }
+}
+
+function showPasswordReset(staff, row) {
+  const existing = row.querySelector(".staff-password-reset");
+  if (existing) {
+    existing.remove();
+    return;
+  }
+  const form = document.createElement("form");
+  form.className = "staff-password-reset";
+  const label = document.createElement("label");
+  label.textContent = `New password for ${staff.name}`;
+  const input = document.createElement("input");
+  input.name = "password";
+  input.type = "password";
+  input.autocomplete = "new-password";
+  input.minLength = 12;
+  input.required = true;
+  label.append(input);
+  const save = document.createElement("button");
+  save.type = "submit";
+  save.className = "staff-toggle";
+  save.textContent = "Save new password";
+  const message = document.createElement("p");
+  message.className = "form-message";
+  form.append(label, save, message);
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    save.disabled = true;
+    showMessage(message, "Saving new password...");
+    try {
+      await request(`/api/billing/staff/${encodeURIComponent(staff.id)}/password`, {
+        method: "POST",
+        headers: { "X-CSRF-Token": state.csrfToken },
+        body: JSON.stringify({ password: input.value }),
+      });
+      input.value = "";
+      showMessage(message, "Password reset. The employee must sign in again.", "success");
+    } catch (error) {
+      showMessage(message, error.message, "error");
+    } finally {
+      save.disabled = false;
+    }
+  });
+  row.append(form);
+  input.focus();
 }
 
 async function loadStaff() {
@@ -301,16 +355,51 @@ function openLogin() {
     return;
   }
   showMessage($("loginMessage"));
+  updateOwnerResetVisibility();
   if (!loginDialog.open) loginDialog.showModal();
   window.setTimeout(() => $("loginEmail").focus(), 0);
 }
 
+function updateOwnerResetVisibility() {
+  const emailField = $("loginEmail");
+  $("forgotOwnerPasswordButton").classList.toggle("is-hidden", !emailField.value.trim() || !emailField.validity.valid);
+}
+
+function showOwnerResetRequest() {
+  const loginEmail = $("loginEmail").value.trim();
+  if (!loginEmail || !$("loginEmail").validity.valid) {
+    showMessage($("loginMessage"), "Enter the studio owner email first.", "error");
+    $("loginEmail").focus();
+    return;
+  }
+  $("ownerResetRequestPanel").classList.remove("is-hidden");
+  $("ownerResetConfirmPanel").classList.add("is-hidden");
+  $("ownerResetEmail").value = loginEmail;
+  showMessage($("ownerResetRequestMessage"));
+  if (!loginDialog.open) loginDialog.showModal();
+  window.setTimeout(() => $("ownerResetEmail").focus(), 0);
+}
+
+function showOwnerResetConfirmation(token, smsOtpRequired = false) {
+  state.ownerResetToken = token;
+  $("ownerResetRequestPanel").classList.add("is-hidden");
+  $("ownerResetConfirmPanel").classList.remove("is-hidden");
+  $("ownerResetOtpPanel").classList.toggle("is-hidden", !smsOtpRequired);
+  $("ownerResetConfirmForm").elements.otp.required = smsOtpRequired;
+  showMessage($("ownerResetConfirmMessage"));
+  if (!loginDialog.open) loginDialog.showModal();
+  window.setTimeout(() => (smsOtpRequired ? $("sendOwnerResetOtpButton") : $("ownerResetConfirmForm").elements.password).focus(), 0);
+}
+
 $("signInButton").addEventListener("click", openLogin);
 $("billingSignInButton").addEventListener("click", openLogin);
+$("forgotOwnerPasswordButton").addEventListener("click", showOwnerResetRequest);
+$("loginEmail").addEventListener("input", updateOwnerResetVisibility);
 $("refreshInvoices").addEventListener("click", loadInvoices);
 $("refreshStaff").addEventListener("click", loadStaff);
 invoiceSearch.addEventListener("input", renderInvoices);
 invoiceStatus.addEventListener("change", renderInvoices);
+serviceSelect.addEventListener("change", updateCustomServiceField);
 
 $("loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -333,6 +422,74 @@ $("loginForm").addEventListener("submit", async (event) => {
   }
 });
 
+$("ownerResetRequestForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const submit = event.submitter;
+  submit.disabled = true;
+  showMessage($("ownerResetRequestMessage"), "Sending reset link...");
+  const form = new FormData(event.currentTarget);
+  try {
+    const result = await request("/api/auth/owner-password-reset/request", {
+      method: "POST",
+      body: JSON.stringify({ email: form.get("email") }),
+    });
+    showMessage($("ownerResetRequestMessage"), result.message || "If the address is the owner account, check its inbox for a reset link.", "success");
+  } catch (error) {
+    showMessage($("ownerResetRequestMessage"), error.message, "error");
+  } finally {
+    submit.disabled = false;
+  }
+});
+
+$("sendOwnerResetOtpButton").addEventListener("click", async (event) => {
+  const button = event.currentTarget;
+  if (!state.ownerResetToken) {
+    showMessage($("ownerResetConfirmMessage"), "Open a new password-reset link from the owner email.", "error");
+    return;
+  }
+  button.disabled = true;
+  showMessage($("ownerResetConfirmMessage"), "Sending SMS OTP...");
+  try {
+    const result = await request("/api/auth/owner-password-reset/otp", {
+      method: "POST",
+      body: JSON.stringify({ token: state.ownerResetToken }),
+    });
+    showMessage($("ownerResetConfirmMessage"), result.message || "SMS OTP sent to the registered owner mobile number.", "success");
+    $("ownerResetConfirmForm").elements.otp.focus();
+  } catch (error) {
+    showMessage($("ownerResetConfirmMessage"), error.message, "error");
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$("ownerResetConfirmForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const formElement = event.currentTarget;
+  const submit = event.submitter;
+  const form = new FormData(formElement);
+  if (form.get("password") !== form.get("confirmation")) {
+    showMessage($("ownerResetConfirmMessage"), "The two passwords do not match.", "error");
+    return;
+  }
+  submit.disabled = true;
+  showMessage($("ownerResetConfirmMessage"), "Resetting password...");
+  try {
+    await request("/api/auth/owner-password-reset/confirm", {
+      method: "POST",
+      body: JSON.stringify({ token: state.ownerResetToken, otp: form.get("otp"), password: form.get("password") }),
+    });
+    state.ownerResetToken = null;
+    formElement.reset();
+    $("ownerResetConfirmPanel").classList.add("is-hidden");
+    showMessage($("loginMessage"), "Owner password reset. Sign in with your new password.", "success");
+  } catch (error) {
+    showMessage($("ownerResetConfirmMessage"), error.message, "error");
+  } finally {
+    submit.disabled = false;
+  }
+});
+
 $("signOutButton").addEventListener("click", async () => {
   try { await request("/api/auth/logout", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken } }); } catch { /* The UI should still clear a timed-out session. */ }
   setSignedOut();
@@ -346,9 +503,12 @@ $("invoiceForm").addEventListener("submit", async (event) => {
   showMessage($("invoiceMessage"), "Creating invoice…");
   const form = new FormData(event.currentTarget);
   const payload = Object.fromEntries(form.entries());
+  if (payload.service === "__custom__") payload.service = payload.customService;
+  delete payload.customService;
   try {
     const result = await request("/api/billing/invoices", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken }, body: JSON.stringify(payload) });
     formElement.reset();
+    updateCustomServiceField();
     setDefaultDueDate();
     const notifiedChannels = (result.clientNotifications || []).filter((notification) => notification.status === "sent").map((notification) => notification.channel);
     const clientNotice = notifiedChannels.length ? ` Client notified by ${notifiedChannels.join(" and ")}.` : payload.clientPhone ? " Client notification needs Twilio and a public website URL to be configured." : "";
@@ -390,9 +550,23 @@ function setDefaultDueDate() {
   $("invoiceForm").elements.dueDate.value = due.toISOString().slice(0, 10);
 }
 
+function updateCustomServiceField() {
+  const customSelected = serviceSelect.value === "__custom__";
+  customServiceField.classList.toggle("is-hidden", !customSelected);
+  customServiceInput.required = customSelected;
+  if (!customSelected) customServiceInput.value = "";
+}
+
 async function initialise() {
   $("year").textContent = String(new Date().getFullYear());
   setDefaultDueDate();
+  updateCustomServiceField();
+  const resetToken = new URLSearchParams(window.location.search).get("reset");
+  if (resetToken) {
+    const smsOtpRequired = new URLSearchParams(window.location.search).get("sms") === "1";
+    window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.hash}`);
+    showOwnerResetConfirmation(resetToken, smsOtpRequired);
+  }
   try {
     const session = await request("/api/auth/session");
     if (session.authenticated) {

@@ -25,6 +25,23 @@ The generated `data/` folder holds the password hash and billing records. Keep i
 
 The portal records invoice status only. It does not charge a card, UPI account, or bank account.
 
+## Employee billing accounts
+
+The studio owner can sign in and use the **Staff billing accounts** section to create a separate login for every billing employee. Each employee receives the `billing` role:
+
+- can sign in, view invoices, and create invoices;
+- cannot mark an invoice as paid;
+- cannot create, enable, or disable staff accounts.
+
+Every newly created invoice records the staff member who created it. The owner can disable an employee account at any time; any existing session for that employee is then rejected immediately.
+
+### Forgotten passwords
+
+- **Billing employee:** The owner signs in, selects **Reset password** beside the employee account, and sets a new strong password. The employee is signed out immediately and must use the new password.
+- **Studio owner:** Select **Forgot owner password?** on the sign-in screen, enter the owner email, and open the one-time reset link within 15 minutes. When owner SMS reset is configured, the link also requires a SMS OTP before a password can be changed. OTP is sent only to the server-configured owner mobile number, never to a number entered on the webpage. Without SMS configuration, the existing email-link reset remains available.
+- **Configure owner SMS reset:** Set `OWNER_RESET_PHONE` in international format (for example `+919985854140`), `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_VERIFY_SERVICE_SID`. Once all four settings exist, SMS OTP becomes mandatory for owner resets. The server limits requests to 3 OTP sends in 15 minutes and 5 incorrect OTP checks in 10 minutes. Do not place any of these credentials in GitHub.
+- **Offline recovery:** If email or SMS delivery is unavailable, stop the server, run `node .\reset-password.js`, enter the owner email and a new password at the masked prompts, then run `npm start` again. This private recovery tool only works on the computer that has the `data` folder.
+
 ## Production notes
 
 - Set `NODE_ENV=production` and serve the app only over HTTPS; this enables the `Secure` cookie flag.
