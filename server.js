@@ -8,6 +8,7 @@ const fs = require("node:fs");
 const fsp = require("node:fs/promises");
 const path = require("node:path");
 const crypto = require("node:crypto");
+const dns = require("node:dns/promises");
 const nodemailer = require("nodemailer");
 const { buildInvoicePdf } = require("./invoice-pdf");
 
@@ -56,18 +57,41 @@ function invoiceEmailConfigured() {
   return Boolean(SMTP_HOST && Number.isInteger(SMTP_PORT) && SMTP_PORT > 0 && SMTP_USER && SMTP_PASS && SMTP_FROM);
 }
 
+// Some hosting networks expose a local IPv6 interface but do not provide an
+// IPv6 route to Gmail. Resolve Gmail to IPv4 first, while preserving the
+// original hostname for TLS certificate verification.
+async function createSmtpTransport() {
+  let host = SMTP_HOST;
+  let tls;
+  try {
+    const ipv4Addresses = await dns.resolve4(SMTP_HOST);
+    if (ipv4Addresses.length) {
+      host = ipv4Addresses[0];
+      tls = { servername: SMTP_HOST };
+    }
+  } catch (error) {
+    console.warn(`SMTP IPv4 lookup failed for ${SMTP_HOST}: ${error.code || error.message}`);
+  }
+
+  return nodemailer.createTransport({
+    host,
+    port: SMTP_PORT,
+    secure: SMTP_SECURE,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+    tls,
+    connectionTimeout: 20_000,
+    greetingTimeout: 20_000,
+    socketTimeout: 45_000,
+  });
+}
+
 async function sendInvoiceEmail(invoice, fallbackRecipient) {
   if (!invoiceEmailConfigured()) throw new Error("Invoice email is not configured");
   const recipient = String(process.env.BILLING_NOTIFICATION_EMAIL || fallbackRecipient || "").trim();
   if (!recipient) throw new Error("Invoice email recipient is not configured");
 
   const invoicePdf = await buildInvoicePdf(invoice);
-  const transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_SECURE,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  });
+  const transporter = await createSmtpTransport();
   const result = await transporter.sendMail({
     from: SMTP_FROM,
     to: recipient,
@@ -87,12 +111,7 @@ function ownerPasswordResetUrl(token, smsOtpRequired) {
 
 async function sendOwnerPasswordResetEmail(user, token, smsOtpRequired) {
   if (!invoiceEmailConfigured()) throw new Error("Email delivery is not configured");
-  const transporter = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_SECURE,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-  });
+  const transporter = await createSmtpTransport();
   const result = await transporter.sendMail({
     from: SMTP_FROM,
     to: user.email,
