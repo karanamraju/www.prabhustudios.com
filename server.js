@@ -1,5 +1,4 @@
 "use strict";
-
 // Minimal dependency-free server for the studio website. It intentionally keeps
 // authentication and billing data on the server; browser storage is never used
 // for passwords, sessions, or invoices.
