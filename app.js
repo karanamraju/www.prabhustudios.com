@@ -51,9 +51,9 @@ function showMessage(element, message = "", kind = "") {
 }
 
 // ==========================================
-// RENDER SERVER CONNECTION
+// RENDER SERVER CONNECTION (Same-Origin)
 // ==========================================
-const API_BASE_URL = "https://prabhu-studio-billing.onrender.com";
+const API_BASE_URL = "";
 
 async function request(url, options = {}) {
   const response = await fetch(API_BASE_URL + url, {
@@ -419,7 +419,6 @@ $("loginForm").addEventListener("submit", async (event) => {
     setSignedIn(session);
     $("loginPassword").value = "";
     loginDialog.close();
-    // లాగిన్ సక్సెస్ అయిన వెంటనే బిల్లింగ్ సెక్షన్‌కి ఆటోమేటిక్‌గా నావిగేట్ అవుతుంది (స్క్రోల్ అవుతుంది)
     $("billing").scrollIntoView({ behavior: "smooth", block: "start" });
     await loadInvoices();
     await loadStaff();
@@ -499,7 +498,7 @@ $("ownerResetConfirmForm").addEventListener("submit", async (event) => {
 });
 
 $("signOutButton").addEventListener("click", async () => {
-  try { await request("/api/auth/logout", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken } }); } catch { /* The UI should still clear a timed-out session. */ }
+  try { await request("/api/auth/logout", { method: "POST", headers: { "X-CSRF-Token": state.csrfToken } }); } catch {}
   setSignedOut();
 });
 
